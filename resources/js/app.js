@@ -12,6 +12,7 @@ Vue.mixin({ methods: { route } })
 Vue.use(InertiaApp)
 Vue.use(InertiaForm)
 Vue.use(PortalVue)
+Vue.prototype.$route = (...args) => route(...args).url()
 
 const app = document.getElementById('app')
 
@@ -20,7 +21,8 @@ new Vue({
 		h(InertiaApp, {
 			props: {
 				initialPage: JSON.parse(app.dataset.page),
-				resolveComponent: name => require(`./Pages/${name}`).default
+				resolveComponent: name =>
+					import(`./Pages/${name}`).then(module => module.default)
 			}
 		})
 }).$mount(app)
