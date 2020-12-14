@@ -15,8 +15,8 @@ module.exports = {
 				secondary: '#939597',
 				'light-secondary': '#DCE0E3',
 				'dark-secondary': '#606263',
-				'light-primary': '#635A1F',
-				'dark-primary': '#E3D78A'
+				'light-primary': '#E3D78A',
+				'dark-primary': '#635A1F'
 			},
 			fontFamily: {
 				sans: ['Nunito', ...defaultTheme.fontFamily.sans]

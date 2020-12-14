@@ -172,12 +172,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -538,91 +532,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "app-layout",
-    {
-      scopedSlots: _vm._u([
-        {
-          key: "header",
-          fn: function() {
-            return [
-              _c(
-                "h2",
-                {
-                  staticClass:
-                    "font-semibold text-xl text-gray-800 leading-tight"
-                },
-                [_vm._v("\n\t\t\tProfile\n\t\t")]
+  return _c("app-layout", [
+    _c("div", [
+      _c(
+        "div",
+        { staticClass: "max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" },
+        [
+          _vm.$page.jetstream.canUpdateProfileInformation
+            ? _c(
+                "div",
+                [
+                  _c("update-profile-information-form", {
+                    attrs: { user: _vm.$page.user }
+                  }),
+                  _vm._v(" "),
+                  _c("jet-section-border")
+                ],
+                1
               )
-            ]
-          },
-          proxy: true
-        }
-      ])
-    },
-    [
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "div",
-          { staticClass: "max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" },
-          [
-            _vm.$page.jetstream.canUpdateProfileInformation
-              ? _c(
-                  "div",
-                  [
-                    _c("update-profile-information-form", {
-                      attrs: { user: _vm.$page.user }
-                    }),
-                    _vm._v(" "),
-                    _c("jet-section-border")
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.$page.jetstream.canUpdatePassword
-              ? _c(
-                  "div",
-                  [
-                    _c("update-password-form", {
-                      staticClass: "mt-10 sm:mt-0"
-                    }),
-                    _vm._v(" "),
-                    _c("jet-section-border")
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.$page.jetstream.canManageTwoFactorAuthentication
-              ? _c(
-                  "div",
-                  [
-                    _c("two-factor-authentication-form", {
-                      staticClass: "mt-10 sm:mt-0"
-                    }),
-                    _vm._v(" "),
-                    _c("jet-section-border")
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("logout-other-browser-sessions-form", {
-              staticClass: "mt-10 sm:mt-0",
-              attrs: { sessions: _vm.sessions }
-            }),
-            _vm._v(" "),
-            _c("jet-section-border"),
-            _vm._v(" "),
-            _c("delete-user-form", { staticClass: "mt-10 sm:mt-0" })
-          ],
-          1
-        )
-      ])
-    ]
-  )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$page.jetstream.canUpdatePassword
+            ? _c(
+                "div",
+                [
+                  _c("update-password-form", { staticClass: "mt-10 sm:mt-0" }),
+                  _vm._v(" "),
+                  _c("jet-section-border")
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$page.jetstream.canManageTwoFactorAuthentication
+            ? _c(
+                "div",
+                [
+                  _c("two-factor-authentication-form", {
+                    staticClass: "mt-10 sm:mt-0"
+                  }),
+                  _vm._v(" "),
+                  _c("jet-section-border")
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("logout-other-browser-sessions-form", {
+            staticClass: "mt-10 sm:mt-0",
+            attrs: { sessions: _vm.sessions }
+          }),
+          _vm._v(" "),
+          _c("jet-section-border"),
+          _vm._v(" "),
+          _c("delete-user-form", { staticClass: "mt-10 sm:mt-0" })
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

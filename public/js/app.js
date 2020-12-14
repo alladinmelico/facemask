@@ -54482,115 +54482,123 @@ var map = {
 	],
 	"./API/Index": [
 		"./resources/js/Pages/API/Index.vue",
+		16,
 		0,
 		1,
-		2,
 		3,
-		4,
-		14
+		2,
+		15
 	],
 	"./API/Index.vue": [
 		"./resources/js/Pages/API/Index.vue",
+		16,
 		0,
 		1,
-		2,
 		3,
-		4,
-		14
+		2,
+		15
 	],
 	"./Dashboard": [
 		"./resources/js/Pages/Dashboard.vue",
+		16,
 		3,
-		10
+		19
 	],
 	"./Dashboard.vue": [
 		"./resources/js/Pages/Dashboard.vue",
+		16,
 		3,
-		10
+		19
 	],
 	"./Profile/DeleteUserForm": [
 		"./resources/js/Pages/Profile/DeleteUserForm.vue",
 		0,
-		1,
-		12
+		20
 	],
 	"./Profile/DeleteUserForm.vue": [
 		"./resources/js/Pages/Profile/DeleteUserForm.vue",
 		0,
-		1,
-		12
+		20
 	],
 	"./Profile/LogoutOtherBrowserSessionsForm": [
 		"./resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue",
 		0,
-		1,
-		6,
-		11
+		17,
+		6
 	],
 	"./Profile/LogoutOtherBrowserSessionsForm.vue": [
 		"./resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue",
 		0,
-		1,
-		6,
-		11
+		17,
+		6
 	],
 	"./Profile/Show": [
 		"./resources/js/Pages/Profile/Show.vue",
+		16,
 		0,
 		1,
-		2,
 		3,
 		5,
-		6,
-		7,
+		17,
+		18,
 		9
 	],
 	"./Profile/Show.vue": [
 		"./resources/js/Pages/Profile/Show.vue",
+		16,
 		0,
 		1,
-		2,
 		3,
 		5,
-		6,
-		7,
+		17,
+		18,
 		9
 	],
 	"./Profile/TwoFactorAuthenticationForm": [
 		"./resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue",
 		0,
-		1,
 		5,
-		13
+		21
 	],
 	"./Profile/TwoFactorAuthenticationForm.vue": [
 		"./resources/js/Pages/Profile/TwoFactorAuthenticationForm.vue",
 		0,
-		1,
 		5,
-		13
+		21
 	],
 	"./Profile/UpdatePasswordForm": [
 		"./resources/js/Pages/Profile/UpdatePasswordForm.vue",
-		2,
+		1,
 		8
 	],
 	"./Profile/UpdatePasswordForm.vue": [
 		"./resources/js/Pages/Profile/UpdatePasswordForm.vue",
-		2,
+		1,
 		8
 	],
 	"./Profile/UpdateProfileInformationForm": [
 		"./resources/js/Pages/Profile/UpdateProfileInformationForm.vue",
-		0,
-		2,
+		1,
+		18,
 		7
 	],
 	"./Profile/UpdateProfileInformationForm.vue": [
 		"./resources/js/Pages/Profile/UpdateProfileInformationForm.vue",
-		0,
-		2,
+		1,
+		18,
 		7
+	],
+	"./User/Index": [
+		"./resources/js/Pages/User/Index.vue",
+		16,
+		3,
+		22
+	],
+	"./User/Index.vue": [
+		"./resources/js/Pages/User/Index.vue",
+		16,
+		3,
+		22
 	]
 };
 function webpackAsyncContext(req) {
@@ -54648,6 +54656,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin({
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_1__["InertiaApp"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(laravel_jetstream__WEBPACK_IMPORTED_MODULE_2__["InertiaForm"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(portal_vue__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$route = function () {
+  return route.apply(void 0, arguments).url();
+};
+
 var app = document.getElementById('app');
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   render: function render(h) {
