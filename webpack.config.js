@@ -5,10 +5,5 @@ module.exports = {
 		alias: {
 			'@': path.resolve('resources/js')
 		}
-	},
-	optimization: {
-		concatenateModules: false,
-		providedExports: false,
-		usedExports: false
 	}
 }
