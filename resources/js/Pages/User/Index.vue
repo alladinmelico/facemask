@@ -14,6 +14,10 @@ import AppLayout from '@/Layouts/AppLayout'
 export default {
 	components: {
 		AppLayout
+	},
+
+	mounted() {
+		console.log('gg')
 	}
 	// props: {
 	// 	user: Object
