@@ -6,7 +6,7 @@
 				<post-card :post="post"></post-card>
 			</div>
 		</div>
-		<modal :show="showModal" @close="close"> </modal>
+		<modal :show="showModal" @close="showModal = false"> </modal>
 	</app-layout>
 </template>
 
@@ -29,11 +29,7 @@ export default {
 			showModal: false
 		}
 	},
-	methods: {
-		close() {
-			this.showModal = false
-		}
-	}
+	methods: {}
 }
 </script>
 
