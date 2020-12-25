@@ -27,6 +27,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cover_id',
+        'is_tag_approved',
+        'tag_id'
     ];
 
     /**
@@ -58,4 +61,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected $with = ['tag'];
+
+    public function posts() {
+
+        return $this->hasMany(Post::class);
+
+    }
+
+    public function followers(){
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'user_follower_id');
+    }
+
+    public function following(){
+        return $this->belongsToMany(User::class, 'followers', 'user_follower_id', 'user_id');
+    }
+
+    public function tag(){
+        return $this->belongsTo('App\Models\Tag');
+    }
 }

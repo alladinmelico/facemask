@@ -1,5 +1,4 @@
 require('./bootstrap')
-
 require('moment')
 
 import Vue from 'vue'
