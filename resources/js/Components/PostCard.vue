@@ -3,7 +3,7 @@
 		class="flex flex-col shadow-md bg-white rounded-lg hover:shadow-lg border-2"
 	>
 		<img
-			:src="img.urls.thumb"
+			:src="imgUrl"
 			:alt="img.alt_description"
 			class="object-cover rounded-t-lg"
 		/>
@@ -20,7 +20,8 @@ export default {
 	},
 	data() {
 		return {
-			img: { urls: { thumb: '' } }
+			img: {},
+			imgUrl: ''
 		}
 	},
 	mounted() {
@@ -33,8 +34,8 @@ export default {
 					`https://api.unsplash.com/photos/${this.post.cover_id}?client_id=${process.env.MIX_UNSPLASH_ACCESS_KEY}`
 				)
 				const data = await response.json()
-				console.log(data)
 				this.img = data
+				this.imgUrl = data.urls.thumb
 			} catch (error) {
 				console.log(error)
 			}
