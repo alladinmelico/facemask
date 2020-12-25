@@ -21,4 +21,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::resource('user',UserController::class)->middleware('auth');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::resource('user',UserController::class);
+});

@@ -20,8 +20,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->text('profile_photo_path')->nullable();
+            $table->unsignedBigInteger('tag_id')->default(1);
+            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->boolean('is_tag_approved')->default(true);
+            $table->boolean('is_private')->default(false);
+            $table->string('cover_id')->default('KtYvqysesC4');
             $table->timestamps();
         });
     }
