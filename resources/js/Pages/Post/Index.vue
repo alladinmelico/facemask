@@ -6,6 +6,7 @@
 				<post-card :post="post"></post-card>
 			</div>
 		</div>
+		<v-btn color="primary" depressed elevation="2">Yoww</v-btn>
 		<modal :show="showModal" @close="showModal = false"> </modal>
 	</app-layout>
 </template>
