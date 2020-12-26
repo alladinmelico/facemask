@@ -17,8 +17,7 @@ class UserController extends Controller
                     'email'=>$user->email,
                     'edit_url'=>route('user.edit',$user)
                 ];
-            }),
-            'create_url'=>route('user.create')
+            })
         ]);
     }
 
