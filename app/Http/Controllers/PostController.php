@@ -31,27 +31,65 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'name' => 'required|min:3',
+            'body' => 'required|min:3',
+            'cover_id' => 'required'
+        ]);
 
+        $validatedData['user_id'] = auth()->user()->id;
+
+        Post::create($validatedData);
+
+        return redirect()->back()->with('success', 'Post added');
+    }
 
     public function show(Post $post)
     {
-        //
+        return view('post.show',compact('post'));
     }
 
     public function edit(Post $post)
     {
-        //
+        if (! Gate::allows('update-delete-post', $post)) {
+            abort(403);
+        }
+        return view('post.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
-        //
+        if (! Gate::allows('update-delete-post', $post)) {
+            abort(403);
+        }
+        $validatedData = $request->validate([
+            'name' => 'required|min:3',
+            'body' => 'required|min:3',
+            'cover_id' => 'required'
+        ]);
+        $post->update($validatedData);
+
+        return redirect()->route('post.show',[$post])->with('success','Post was successfully updated');
     }
 
     public function destroy(Post $post)
     {
-        //
+        if (! Gate::allows('update-delete-post', $post)) {
+            abort(403);
+        }
+
+        $post->delete();
+
+        return redirect()->back()->with('warning','Post has been deleted');
+    }
+
+    public function updateCover(Request $request, Post $post){
+        $validatedData = $request->validate([
+            'cover_id' => 'required'
+        ]);
+
+        $post->update($validatedData);
+
+        return redirect()->back()->with('success', 'Cover updated successfully');
     }
 }

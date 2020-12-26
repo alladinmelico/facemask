@@ -21,6 +21,22 @@ const app = document.getElementById('app')
 Vue.prototype.$route = (...args) => route(...args).url()
 
 new Vue({
+	vuetify: new Vuetify({
+		theme: {
+			themes: {
+				dark: {
+					primary: '#F5DF4D',
+					secondary: '#939597',
+					accent: '#624CF5',
+					error: '#FF5252',
+					info: '#2196F3',
+					success: '#4CAF50',
+					warning: '#FFC107'
+				}
+			},
+			dark: true
+		}
+	}),
 	render: h =>
 		h(InertiaApp, {
 			props: {

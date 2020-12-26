@@ -33,6 +33,7 @@
         "@headlessui/vue": "^0.2.0",
         "@inertiajs/progress": "^0.2.4",
         "dotenv": "^8.2.0",
+        "vuelidate": "^0.7.6",
         "vuetify": "^2.4.0"
     }
 }

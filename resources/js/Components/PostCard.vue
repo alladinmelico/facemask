@@ -1,16 +1,14 @@
 <template>
-	<div
-		class="flex flex-col shadow-md bg-white rounded-lg hover:shadow-lg border-2"
-	>
-		<img
-			:src="imgUrl"
-			:alt="img.alt_description"
-			class="object-cover rounded-t-lg"
-		/>
-		<h3 class="font-bold">{{ post.name }}</h3>
-		<p class="p-3">{{ post.body }}</p>
-		<a href="">{{ post.email }}</a>
-	</div>
+	<v-card elevation="3" max-width="344" tile class="mx-auto rounded-lg">
+		<v-img class="white--text align-end" height="200px" :src="imgUrl">
+		</v-img>
+		<v-card-title>{{ post.name }}</v-card-title>
+
+		<v-divider class="mx-4"></v-divider>
+		<v-card-text>
+			{{ post.body }}
+		</v-card-text>
+	</v-card>
 </template>
 
 <script>
@@ -21,7 +19,8 @@ export default {
 	data() {
 		return {
 			img: {},
-			imgUrl: ''
+			imgUrl: '',
+			loading: false
 		}
 	},
 	mounted() {

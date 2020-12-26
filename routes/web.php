@@ -25,4 +25,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('user',UserController::class);
     Route::resource('post',PostController::class);
+    Route::put('updatePostCover', [PostController::class, 'updateCover'])->name('updatePostCover');
+    Route::put('updateCover', [UserController::class, 'updateCover'])->name('updateCover');
+    Route::post('/reply/store', [CommentController::class,'replyStore'])->name('reply.add');
+    Route::resource('comment', CommentController::class);
+    Route::delete('unfollow',[FollowerController::class,'unfollow'])->name('unfollow');
+    Route::resource('follower', FollowerController::class);
+    // Route::get('chat/{user}', ShowChats::class)->name('chat.show');
+    // Route::resource('chat', ShowChats::class);
 });

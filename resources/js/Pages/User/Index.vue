@@ -1,27 +1,15 @@
 <template>
-	<app-layout>
-		<div>
-			<inertia-link href="$route('user.create')"
-				>Create User</inertia-link
-			>
-			<div v-for="user in users" class="" :key="user.id">
-				<!-- <img
-					:src="user.profile_photo_url"
-					:alt="user.name"
-					class="w-12 h-12 rounded-full"
-				/> -->
-			</div>
-		</div>
-	</app-layout>
+	<div>
+		<inertia-link href="$route('user.create')">Create User</inertia-link>
+		<div v-for="user in users" class="" :key="user.id"></div>
+	</div>
 </template>
 
 <script>
-import AppLayout from '@/Layouts/AppLayout'
+import Layout from '@/Layouts/Layout'
 
 export default {
-	components: {
-		AppLayout
-	},
+	layout: Layout,
 	props: {
 		users: Array
 	}
