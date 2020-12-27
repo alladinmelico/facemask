@@ -13,7 +13,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with(['user.followers','comments'])->orderBy('updated_at','DESC')->get()->map(function($post){
+        $posts = Post::with(['user.followers','comments'])->orderBy('updated_at','DESC')->paginate(10)->map(function($post){
             return [
                 'id'=>$post->id,
                 'name' => $post->name,

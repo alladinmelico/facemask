@@ -3,7 +3,7 @@
 		<v-row>
 			<v-img
 				:src="coverImg != '' ? coverImg.urls.regular : ''"
-				:alt="user.name"
+				:alt="userProfile.name"
 				max-height="200"
 				class="rounded-lg mx-auto"
 			>
@@ -53,16 +53,16 @@
 				<v-container class="flex justify-around items-center">
 					<v-avatar size="62">
 						<v-img
-							:src="user.profile_photo_url"
-							:alt="user.name"
+							:src="userProfile.profile_photo_url"
+							:alt="userProfile.name"
 						></v-img>
 					</v-avatar>
-					<span class="text-h5">{{ user.name }}</span>
+					<span class="text-h5">{{ userProfile.name }}</span>
 				</v-container>
 				<v-list rounded dense>
 					<v-subheader>Followers</v-subheader>
 					<v-list-item
-						v-for="follower in user.followers"
+						v-for="follower in userProfile.followers"
 						:key="follower.id"
 						link
 					>
@@ -88,7 +88,7 @@
 				<v-list rounded dense>
 					<v-subheader>Following</v-subheader>
 					<v-list-item
-						v-for="follow in user.following"
+						v-for="follow in userProfile.following"
 						:key="follow.id"
 						link
 					>
@@ -120,7 +120,10 @@
 					</form-dialog>
 				</h5>
 				<v-row v-if="canView" class="flex justify-around items-center">
-					<v-container v-for="post in user.posts" :key="post.id">
+					<v-container
+						v-for="post in userProfile.posts"
+						:key="post.id"
+					>
 						<post-card
 							:post="post"
 							:width="900"
@@ -146,7 +149,7 @@ export default {
 	components: { SearchPhoto, PostCard, FormDialog },
 	layout: Layout,
 	props: {
-		user: Object,
+		userProfile: Object,
 		canView: { type: Boolean, default: false },
 		canEdit: { type: Boolean, default: false },
 		tags: Array
@@ -156,13 +159,13 @@ export default {
 	},
 	mounted() {
 		this.getImage()
-		console.log(this.user)
+		console.log(this.$page)
 	},
 	methods: {
 		async getImage() {
 			try {
 				const response = await fetch(
-					`https://api.unsplash.com/photos/${this.user.cover_id}?client_id=${process.env.MIX_UNSPLASH_ACCESS_KEY}`
+					`https://api.unsplash.com/photos/${this.userProfile.cover_id}?client_id=${process.env.MIX_UNSPLASH_ACCESS_KEY}`
 				)
 				const data = await response.json()
 				this.coverImg = data
