@@ -2,7 +2,11 @@
 	<v-card elevation="3" max-width="344" tile class="mx-auto rounded-lg">
 		<v-img class="white--text align-end" height="200px" :src="imgUrl">
 		</v-img>
-		<v-card-title>{{ post.name }}</v-card-title>
+		<v-card-title>
+			<inertia-link :href="route('post.show', post.id)">
+				{{ post.name }}
+			</inertia-link>
+		</v-card-title>
 
 		<v-divider class="mx-4"></v-divider>
 		<v-card-text>

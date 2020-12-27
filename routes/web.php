@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\ChatController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

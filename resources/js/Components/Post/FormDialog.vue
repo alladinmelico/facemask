@@ -109,7 +109,7 @@ export default {
 	},
 
 	methods: {
-		async submit() {
+		submit() {
 			this.$v.$touch()
 			if (!this.$v.$invalid) {
 				this.$inertia.post('/post', this.form)

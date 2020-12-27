@@ -46,7 +46,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('post.show',compact('post'));
+        $post = Post::with('comments.user')->find($post->id);
+        return Inertia::render('Post/Show',compact('post'));
     }
 
     public function edit(Post $post)
