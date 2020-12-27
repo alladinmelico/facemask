@@ -55,11 +55,15 @@ export default {
 	},
 	methods: {
 		async getPhotos() {
-			const response = await fetch(
-				`https://api.unsplash.com/search/photos?client_id=${process.env.MIX_UNSPLASH_ACCESS_KEY}&query=${this.search}`
-			)
-			const data = await response.json()
-			this.photos = data.results
+			try {
+				const response = await fetch(
+					`https://api.unsplash.com/search/photos?client_id=${process.env.MIX_UNSPLASH_ACCESS_KEY}&query=${this.search}`
+				)
+				const data = await response.json()
+				this.photos = data.results
+			} catch (error) {
+				console.log(error)
+			}
 		},
 		selectedPhoto(photo) {
 			this.photo = photo

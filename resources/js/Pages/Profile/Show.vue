@@ -1,36 +1,34 @@
 <template>
-	<app-layout>
-		<div>
-			<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-				<div v-if="$page.jetstream.canUpdateProfileInformation">
-					<update-profile-information-form :user="$page.user" />
-
-					<jet-section-border />
-				</div>
-
-				<div v-if="$page.jetstream.canUpdatePassword">
-					<update-password-form class="mt-10 sm:mt-0" />
-
-					<jet-section-border />
-				</div>
-
-				<div v-if="$page.jetstream.canManageTwoFactorAuthentication">
-					<two-factor-authentication-form class="mt-10 sm:mt-0" />
-
-					<jet-section-border />
-				</div>
-
-				<logout-other-browser-sessions-form
-					:sessions="sessions"
-					class="mt-10 sm:mt-0"
-				/>
+	<div>
+		<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+			<div v-if="$page.jetstream.canUpdateProfileInformation">
+				<update-profile-information-form :user="$page.user" />
 
 				<jet-section-border />
-
-				<delete-user-form class="mt-10 sm:mt-0" />
 			</div>
+
+			<div v-if="$page.jetstream.canUpdatePassword">
+				<update-password-form class="mt-10 sm:mt-0" />
+
+				<jet-section-border />
+			</div>
+
+			<div v-if="$page.jetstream.canManageTwoFactorAuthentication">
+				<two-factor-authentication-form class="mt-10 sm:mt-0" />
+
+				<jet-section-border />
+			</div>
+
+			<logout-other-browser-sessions-form
+				:sessions="sessions"
+				class="mt-10 sm:mt-0"
+			/>
+
+			<jet-section-border />
+
+			<delete-user-form class="mt-10 sm:mt-0" />
 		</div>
-	</app-layout>
+	</div>
 </template>
 
 <script>
@@ -41,10 +39,11 @@ import LogoutOtherBrowserSessionsForm from './LogoutOtherBrowserSessionsForm'
 import TwoFactorAuthenticationForm from './TwoFactorAuthenticationForm'
 import UpdatePasswordForm from './UpdatePasswordForm'
 import UpdateProfileInformationForm from './UpdateProfileInformationForm'
+import Layout from '@/Layouts/Layout'
 
 export default {
 	props: ['sessions'],
-
+	layout: Layout,
 	components: {
 		AppLayout,
 		DeleteUserForm,

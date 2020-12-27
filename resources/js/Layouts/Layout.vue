@@ -1,11 +1,13 @@
 <template>
 	<v-app>
-		<v-app-bar absolute app>
+		<v-app-bar fixed elevation="5" app>
 			<v-app-bar-nav-icon
 				@click.stop="drawer = !drawer"
 			></v-app-bar-nav-icon>
-
-			<v-toolbar-title>Title</v-toolbar-title>
+			<v-avatar :tile="true">
+				<v-img :src="'../storage/img/logo.png'" alt="logo"></v-img>
+			</v-avatar>
+			<v-toolbar-title class="ml-3">facemask</v-toolbar-title>
 
 			<v-spacer></v-spacer>
 
@@ -23,7 +25,7 @@
 
 		<v-navigation-drawer
 			v-model="drawer"
-			absolute
+			fixed
 			temporary
 			height="100vh"
 			app
@@ -37,7 +39,11 @@
 					></v-img>
 				</v-list-item-avatar>
 				<v-list-item-content>
-					<v-list-item-title>{{ $page.user.name }}</v-list-item-title>
+					<inertia-link :href="route('user.show', $page.user.id)">
+						<v-list-item-title>{{
+							$page.user.name
+						}}</v-list-item-title>
+					</inertia-link>
 				</v-list-item-content>
 			</v-list-item>
 			<navigation-list></navigation-list>
@@ -57,13 +63,17 @@
 				<slot></slot>
 			</v-responsive>
 		</v-main>
+		<app-footer app></app-footer>
 	</v-app>
 </template>
 
 <script>
 import NavigationList from '../Components/NavigationList.vue'
+import AppFooter from '../Components/AppFooter'
+import ApplicationLogo from '../Jetstream/ApplicationLogo'
+
 export default {
-	components: { NavigationList },
+	components: { NavigationList, AppFooter, ApplicationLogo },
 	data: () => ({
 		links: ['Dashboard', 'Messages', 'Profile', 'Updates'],
 		drawer: false

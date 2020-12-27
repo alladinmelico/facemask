@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 class PostController extends Controller
 {
@@ -46,7 +49,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post = Post::with('comments.user')->find($post->id);
+        $post = Post::with(['user','comments.user'])->find($post->id);
         return Inertia::render('Post/Show',compact('post'));
     }
 
@@ -70,7 +73,7 @@ class PostController extends Controller
         ]);
         $post->update($validatedData);
 
-        return redirect()->route('post.show',[$post])->with('success','Post was successfully updated');
+        return redirect()->back()->with('success','Post was successfully updated');
     }
 
     public function destroy(Post $post)
