@@ -36,7 +36,7 @@
 				{{ post.body }}
 			</p>
 			<p class="font-weight-thin font-italic">
-				{{ post.created_at }}
+				{{ post.date }}
 			</p>
 		</v-card-text>
 
@@ -88,6 +88,7 @@ export default {
 	},
 	mounted() {
 		this.getImage()
+		console.log(this.post)
 	},
 	computed: {
 		form() {

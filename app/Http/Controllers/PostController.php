@@ -23,7 +23,7 @@ class PostController extends Controller
                     'name' => $post->name,
                     'body' => $post->body,
                     'cover_id' => $post->cover_id,
-                    'created_at' => Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans(),
+                    'date' => $post->date,
                     'user_id' => $post->user_id,
                     'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url'])
                 ];

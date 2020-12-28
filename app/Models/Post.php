@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Comment;
-
+use Illuminate\Support\Carbon;
 class Post extends Model
 {
     use HasFactory;
@@ -14,6 +14,7 @@ class Post extends Model
         'name','body','user_id','cover_id'
     ];
 
+    protected $appends = ['date'];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -31,5 +32,10 @@ class Post extends Model
     public function userCanSee()
     {
         return $this->with('user');
+    }
+
+    public function getDateAttribute()
+    {
+        return Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans();
     }
 }

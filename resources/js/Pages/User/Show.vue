@@ -57,8 +57,11 @@
 						:isPrivate="userProfile.is_private == 1 ? true : false"
 						:tag="userProfile.tag.name"
 						:name="userProfile.name"
-						:nameSize="'text-sm-h6 text-md-h5'"
-					></user-badge>
+					>
+					</user-badge>
+					<v-btn color="primary" small
+						>Follow <v-icon>mdi-plus</v-icon></v-btn
+					>
 				</v-container>
 				<v-list rounded dense>
 					<v-subheader>Followers</v-subheader>
