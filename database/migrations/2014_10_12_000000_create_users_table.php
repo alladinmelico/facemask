@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('tag_id')->default(1);
+            $table->text('profile_photo_path')->nullable();
             $table->foreign('tag_id')->references('id')->on('tags');
             $table->boolean('is_tag_approved')->default(true);
             $table->boolean('is_private')->default(false);

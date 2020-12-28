@@ -7,20 +7,26 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 class PostController extends Controller
 {
 
     public function index()
     {
-        $posts = Post::with(['user.followers','comments'])->orderBy('updated_at','DESC')->paginate(10)->map(function($post){
-            return [
-                'id'=>$post->id,
-                'name' => $post->name,
-                'body' => $post->body,
-                'user_id'=>$post->user_id,
-                'cover_id'=>$post->cover_id
-            ];
+        $posts = Post::with('user.followers')
+                ->orderBy('updated_at','DESC')
+                ->paginate(10)
+                ->transform(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'name' => $post->name,
+                    'body' => $post->body,
+                    'cover_id' => $post->cover_id,
+                    'created_at' => Carbon::createFromTimeStamp(strtotime($post->created_at))->diffForHumans(),
+                    'user_id' => $post->user_id,
+                    'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url'])
+                ];
         });
 
         return Inertia::render('Post/Index',compact('posts'));

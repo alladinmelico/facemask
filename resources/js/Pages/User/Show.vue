@@ -51,13 +51,14 @@
 		<v-row class="my-10">
 			<v-col style="border-right: solid 1px lightgrey">
 				<v-container class="flex justify-around items-center">
-					<v-avatar size="62">
-						<v-img
-							:src="userProfile.profile_photo_url"
-							:alt="userProfile.name"
-						></v-img>
-					</v-avatar>
-					<span class="text-h5">{{ userProfile.name }}</span>
+					<user-badge
+						:imgSize="50"
+						:imgUrl="userProfile.profile_photo_url"
+						:isPrivate="userProfile.is_private == 1 ? true : false"
+						:tag="userProfile.tag.name"
+						:name="userProfile.name"
+						:nameSize="'text-sm-h6 text-md-h5'"
+					></user-badge>
 				</v-container>
 				<v-list rounded dense>
 					<v-subheader>Followers</v-subheader>
@@ -67,20 +68,23 @@
 						link
 					>
 						<v-list-item-icon>
-							<v-avatar size="25">
-								<v-img
-									:src="follower.profile_photo_url"
-									:alt="follower.name"
-								></v-img>
-							</v-avatar>
+							<user-badge
+								:imgSize="25"
+								:imgUrl="follower.profile_photo_url"
+							></user-badge>
 						</v-list-item-icon>
 						<v-list-item-content>
 							<inertia-link
 								:href="route('user.show', follower.id)"
 							>
-								<v-list-item-title
-									v-text="follower.name"
-								></v-list-item-title>
+								<v-list-item-title>
+									{{ follower.name }}
+									<v-icon dense x-small>{{
+										follower.is_private
+											? 'mdi-lock'
+											: 'mdi-lock-open-variant'
+									}}</v-icon>
+								</v-list-item-title>
 							</inertia-link>
 						</v-list-item-content>
 					</v-list-item>
@@ -93,18 +97,21 @@
 						link
 					>
 						<v-list-item-icon>
-							<v-avatar size="25">
-								<v-img
-									:src="follow.profile_photo_url"
-									:alt="follow.name"
-								></v-img>
-							</v-avatar>
+							<user-badge
+								:imgSize="25"
+								:imgUrl="follow.profile_photo_url"
+							></user-badge>
 						</v-list-item-icon>
 						<v-list-item-content>
 							<inertia-link :href="route('user.show', follow.id)">
-								<v-list-item-title
-									v-text="follow.name"
-								></v-list-item-title>
+								<v-list-item-title>
+									{{ follow.name }}
+									<v-icon dense x-small>{{
+										follow.is_private
+											? 'mdi-lock'
+											: 'mdi-lock-open-variant'
+									}}</v-icon>
+								</v-list-item-title>
 							</inertia-link>
 						</v-list-item-content>
 					</v-list-item>
@@ -144,9 +151,10 @@ import Layout from '@/Layouts/Layout'
 import SearchPhoto from '../../Components/SearchPhoto.vue'
 import PostCard from '../../Components/PostCard.vue'
 import FormDialog from '@/Components/Post/FormDialog.vue'
+import UserBadge from '../../Components/User/UserBadge.vue'
 
 export default {
-	components: { SearchPhoto, PostCard, FormDialog },
+	components: { SearchPhoto, PostCard, FormDialog, UserBadge },
 	layout: Layout,
 	props: {
 		userProfile: Object,
@@ -159,7 +167,6 @@ export default {
 	},
 	mounted() {
 		this.getImage()
-		console.log(this.$page)
 	},
 	methods: {
 		async getImage() {
@@ -179,9 +186,7 @@ export default {
 				_method: 'PUT'
 			})
 		},
-		deletePost(postId) {
-			console.log(postId)
-		}
+		deletePost(postId) {}
 	},
 	watch: {
 		user() {

@@ -46,7 +46,7 @@ class UserController extends Controller
             }
         }
         $canEdit = $user->id == auth()->user()->id;
-        $userProfile = User::with(['followers','following','posts'])->find($user->id);
+        $userProfile = User::with(['followers','following','posts.user'])->find($user->id);
         return Inertia::render('User/Show',compact('userProfile','canView','canEdit','tags'));
     }
 

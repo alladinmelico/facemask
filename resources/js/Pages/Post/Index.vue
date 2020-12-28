@@ -37,9 +37,7 @@ export default {
 		}
 	},
 	methods: {
-		deletePost(postId) {
-			console.log(postId)
-		}
+		deletePost(postId) {}
 	}
 }
 </script>
