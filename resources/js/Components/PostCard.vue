@@ -24,7 +24,7 @@
 					@confirm="confirmDelete"
 				>
 					<template #btn
-						><v-icon color="red">mdi-delete</v-icon>
+						><v-icon color="red">mdi-delete-outline</v-icon>
 					</template>
 				</confirm-dialog>
 			</div>
@@ -44,12 +44,11 @@
 			<user-badge
 				:imgSize="25"
 				:imgUrl="post.user.profile_photo_url"
-				:isPrivate="post.user.is_private == 1 ? true : false"
-				:name="post.user.name"
-				:tag="post.user.tag.name"
-				:userUrl="route('user.show', post.user.id)"
+				:userBadge="post.user"
+				:tagName="post.user.tag.name"
+				:isFollower="post.is_follower"
 				style="max-width: 300px"
-				><v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+			>
 			</user-badge>
 			<v-spacer></v-spacer>
 			<v-divider vertical></v-divider>
@@ -88,7 +87,6 @@ export default {
 	},
 	mounted() {
 		this.getImage()
-		console.log(this.post)
 	},
 	computed: {
 		form() {

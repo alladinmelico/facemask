@@ -59,7 +59,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-        'profile_photo_url',
+        'profile_photo_url'
     ];
 
     protected $with = ['tag'];
@@ -76,6 +76,17 @@ class User extends Authenticatable
 
     public function following(){
         return $this->belongsToMany(User::class, 'followers', 'user_follower_id', 'user_id');
+    }
+
+    public function getIsFollowerAttribute(){
+        return $this->followers->contains(auth()->user()->id);
+    }
+
+    public function getIsPrivateAttribute($value){
+        return $value == 1;
+    }
+    public function getIsTagApprovedAttribute($value){
+        return $value == 1;
     }
 
     public function tag(){

@@ -8,7 +8,7 @@
 
 		<v-row>
 			<v-col v-for="post in posts" :key="post.id" cols="12" md="6" lg="4">
-				<post-card :post="post" @delete-post="deletePost"></post-card>
+				<post-card :post="post"></post-card>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -35,9 +35,6 @@ export default {
 		return {
 			showModal: false
 		}
-	},
-	methods: {
-		deletePost(postId) {}
 	}
 }
 </script>

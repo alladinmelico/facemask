@@ -25,7 +25,9 @@ class PostController extends Controller
                     'cover_id' => $post->cover_id,
                     'date' => $post->date,
                     'user_id' => $post->user_id,
-                    'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url'])
+                    'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url']),
+                    'is_follower' => $post->user->is_follower
+
                 ];
         });
 

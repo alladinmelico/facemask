@@ -7,7 +7,7 @@
 				max-height="200"
 				class="rounded-lg mx-auto"
 			>
-				<v-container v-if="canEdit">
+				<v-container v-if="userProfile.id === $page.user.id">
 					<v-dialog
 						max-width="500px"
 						transition="dialog-top-transition"
@@ -49,19 +49,16 @@
 			</v-img>
 		</v-row>
 		<v-row class="my-10">
-			<v-col style="border-right: solid 1px lightgrey">
+			<v-col cols="12" sm="4" class="mx-auto">
 				<v-container class="flex justify-around items-center">
 					<user-badge
 						:imgSize="50"
 						:imgUrl="userProfile.profile_photo_url"
-						:isPrivate="userProfile.is_private == 1 ? true : false"
-						:tag="userProfile.tag.name"
-						:name="userProfile.name"
+						:userBadge="userProfile"
+						:isFollower="isFollower"
+						:tagName="userProfile.tag.name"
 					>
 					</user-badge>
-					<v-btn color="primary" small
-						>Follow <v-icon>mdi-plus</v-icon></v-btn
-					>
 				</v-container>
 				<v-list rounded dense>
 					<v-subheader>Followers</v-subheader>
@@ -74,6 +71,7 @@
 							<user-badge
 								:imgSize="25"
 								:imgUrl="follower.profile_photo_url"
+								:tagName="follower.tag.name"
 							></user-badge>
 						</v-list-item-icon>
 						<v-list-item-content>
@@ -82,11 +80,12 @@
 							>
 								<v-list-item-title>
 									{{ follower.name }}
-									<v-icon dense x-small>{{
-										follower.is_private
-											? 'mdi-lock'
-											: 'mdi-lock-open-variant'
-									}}</v-icon>
+									<v-icon
+										dense
+										x-small
+										v-if="follower.is_private"
+										>mdi-lock</v-icon
+									>
 								</v-list-item-title>
 							</inertia-link>
 						</v-list-item-content>
@@ -103,6 +102,7 @@
 							<user-badge
 								:imgSize="25"
 								:imgUrl="follow.profile_photo_url"
+								:tagName="follow.tag.name"
 							></user-badge>
 						</v-list-item-icon>
 						<v-list-item-content>
@@ -120,7 +120,7 @@
 					</v-list-item>
 				</v-list>
 			</v-col>
-			<v-col cols="8">
+			<v-col cols="12" sm="8" class="mx-auto">
 				<h5 class="text-h5">
 					Posts
 					<form-dialog>
@@ -129,16 +129,15 @@
 						</template>
 					</form-dialog>
 				</h5>
-				<v-row v-if="canView" class="flex justify-around items-center">
+				<v-row
+					v-if="canView"
+					class="flex justify-around items-center mx-auto"
+				>
 					<v-container
 						v-for="post in userProfile.posts"
 						:key="post.id"
 					>
-						<post-card
-							:post="post"
-							:width="900"
-							@delete-post="deletePost"
-						></post-card>
+						<post-card :post="post" :width="900"></post-card>
 					</v-container>
 				</v-row>
 				<v-row v-else class="mx-auto">
@@ -162,8 +161,8 @@ export default {
 	props: {
 		userProfile: Object,
 		canView: { type: Boolean, default: false },
-		canEdit: { type: Boolean, default: false },
-		tags: Array
+		tags: Array,
+		isFollower: { type: Boolean, default: false }
 	},
 	data() {
 		return { coverImg: '' }
@@ -188,11 +187,10 @@ export default {
 				cover_id: photo.id,
 				_method: 'PUT'
 			})
-		},
-		deletePost(postId) {}
+		}
 	},
 	watch: {
-		user() {
+		userProfile() {
 			this.getImage()
 		}
 	}

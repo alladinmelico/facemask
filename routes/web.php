@@ -34,8 +34,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('updateCover', [UserController::class, 'updateCover'])->name('updateCover');
     Route::post('/reply/store', [CommentController::class,'replyStore'])->name('reply.add');
     Route::resource('comment', CommentController::class);
-    Route::delete('unfollow',[FollowerController::class,'unfollow'])->name('unfollow');
-    Route::resource('follower', FollowerController::class);
+    Route::delete('unfollow/{user}',[FollowerController::class,'unfollow'])->name('unfollow');
+    Route::post('follow/{user}', [FollowerController::class, 'store']);
     // Route::get('chat/{user}', ShowChats::class)->name('chat.show');
     // Route::resource('chat', ShowChats::class);
 });
