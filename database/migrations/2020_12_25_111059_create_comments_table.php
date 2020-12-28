@@ -20,7 +20,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('commentable_id')->unsigned()->nullable();
-            $table->string('commentable_type')->default('App\Models\Post');
+            $table->string('commentable_type')->default('App\\\Models\\\Post');
             $table->timestamps();
         });
     }

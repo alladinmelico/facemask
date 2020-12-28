@@ -42,7 +42,7 @@
 
 		<v-card-actions class="d-flex">
 			<user-badge
-				:imgSize="25"
+				:imgSize="badgeImgSize"
 				:imgUrl="post.user.profile_photo_url"
 				:userBadge="post.user"
 				:tagName="post.user.tag.name"
@@ -77,7 +77,8 @@ export default {
 	},
 	props: {
 		post: Object,
-		width: { type: Number, default: 344 }
+		width: { type: Number, default: 344 },
+		badgeImgSize: { type: Number, default: 25 }
 	},
 	data() {
 		return {

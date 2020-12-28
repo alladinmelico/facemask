@@ -137,7 +137,11 @@
 						v-for="post in userProfile.posts"
 						:key="post.id"
 					>
-						<post-card :post="post" :width="900"></post-card>
+						<post-card
+							:post="post"
+							:width="900"
+							:badgeImgSize="40"
+						></post-card>
 					</v-container>
 				</v-row>
 				<v-row v-else class="mx-auto">
