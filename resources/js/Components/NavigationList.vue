@@ -33,6 +33,11 @@ export default {
 					title: 'Posts',
 					icon: 'mdi-post-outline',
 					route: this.$route('post.index')
+				},
+				{
+					title: 'Chats',
+					icon: 'mdi-message-outline',
+					route: this.$route('chat')
 				}
 			]
 		}

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\User;
 use App\Models\Chat;
 
 /*
@@ -24,7 +25,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 // });
 
 
-Broadcast::channel('chat.{chatId}', function ($user, $chatId) {
-    $chat = Chat::find($chatId);
-    return ($chat->sender_id ==$user->id) || ($chat->receiver_id ==$user->id);
+Broadcast::channel('chat.{chat}', function (User $user, Chat $chat) {
+    return ($chat->sender_id === $user->id) || ($chat->receiver_id === $user->id);
 });

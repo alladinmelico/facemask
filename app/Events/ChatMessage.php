@@ -7,18 +7,19 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChatMessage implements ShouldBroadcast
+class ChatMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $chat;
+    public $message;
 
-    public function __construct($chat)
+    public function __construct($message)
     {
-        $this->chat = $chat;
+        $this->message = $message;
     }
 
     /**
@@ -28,6 +29,8 @@ class ChatMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.'.$this->chat->id);
+        return new PrivateChannel('chat.'.$this->message->chat->id);
     }
+
+    //TODO: Wrong chat id
 }

@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Events\ChatMessage;
+
 class ChatController extends Controller
 {
     public function index()
@@ -35,20 +37,31 @@ class ChatController extends Controller
     {
         return Chat::where('sender_id',auth()->user()->id)
                     ->orWhere('receiver_id',auth()->user()->id)
-                    ->with(['messages','sender','receiver'])->orderBy('created_at', 'DESC')->get();
+                    ->with(['messages','sender','receiver'])->orderBy('created_at', 'ASC')->get();
 
     }
 
     public function sendMessage(Request $request)
     {
-        dd($request);
-    	$chat = auth()->user()->messages()->create([
-            'message' => $request->message
+        $validatedData = $request->validate([
+            'message' => 'required',
+            'receiver_id'=>'exists:users,id'
         ]);
 
-    	broadcast(new ChatEvent($chat->load('user')))->toOthers();
+    	$chat = Chat::where([['sender_id',auth()->user()->id],['receiver_id',$validatedData['receiver_id']]])->first();
+        if(is_null($chat)){
+            $chat = Chat::create(['sender_id'=>auth()->user()->id,'receiver_id'=>$validatedData['receiver_id']]);
 
-    	return ['status' => 'success'];
+        }
+
+        $message = new Message();
+        $message->message = $validatedData['message'];
+        $message->chat()->associate($chat);
+        $message->save();
+        $message->chat = $chat;
+
+        broadcast(new ChatMessage($message))->toOthers();
+        return $message;
     }
 
     public function create()
