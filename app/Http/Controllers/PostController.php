@@ -26,11 +26,11 @@ class PostController extends Controller
                     'date' => $post->date,
                     'user_id' => $post->user_id,
                     'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url']),
-                    'is_follower' => $post->user->is_follower
+                    'is_follower' => $post->user->is_follower,
+                    'total_comments' => $post->total_comments
 
                 ];
         });
-
         return Inertia::render('Post/Index',compact('posts'));
     }
 
@@ -57,8 +57,11 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+
         $post = Post::with(['user','comments.user'])->find($post->id);
-        return Inertia::render('Post/Show',compact('post'));
+        $comments = $post->all_comments;
+        // dd($comments);
+        return Inertia::render('Post/Show',compact('post','comments'));
     }
 
     public function edit(Post $post)

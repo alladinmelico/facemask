@@ -32,14 +32,18 @@
 
 		<v-divider class="mx-4"></v-divider>
 		<v-card-text>
-			<p>
-				{{ post.body }}
-			</p>
-			<p class="font-weight-thin font-italic">
-				{{ post.date }}
-			</p>
+			{{ post.body }}
 		</v-card-text>
-
+		<v-card-text class="d-flex justify-between px-5">
+			<span class="font-weight-thin font-italic">
+				{{ post.date }}
+			</span>
+			<v-badge color="green" :content="post.total_comments" overlap>
+				<v-icon>
+					mdi-comment-multiple
+				</v-icon>
+			</v-badge>
+		</v-card-text>
 		<v-card-actions class="d-flex">
 			<user-badge
 				:imgSize="badgeImgSize"
@@ -88,6 +92,7 @@ export default {
 	},
 	mounted() {
 		this.getImage()
+		console.log(this.post)
 	},
 	computed: {
 		form() {

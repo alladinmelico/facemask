@@ -1,5 +1,5 @@
 <template>
-	<v-container class="mt-5">
+	<v-container>
 		<v-row v-if="img !== ''">
 			<v-img :src="img.urls.regular" max-height="400" class="rounded-lg">
 				<template v-slot:placeholder>
@@ -27,9 +27,9 @@
 		<v-container class="p-8">
 			<h5>Comments</h5>
 			<v-divider></v-divider>
-			<comment :comments="post.comments" :postId="post.id"></comment>
+			<comment :comments="comments" :postId="post.id"></comment>
 		</v-container>
-		<v-container>
+		<v-container class="mt-5">
 			<form @submit.prevent="submit">
 				<v-text-field
 					label="Comment"
@@ -55,7 +55,8 @@ export default {
 		Comment
 	},
 	props: {
-		post: Object
+		post: Object,
+		comments: Array
 	},
 	data() {
 		return {

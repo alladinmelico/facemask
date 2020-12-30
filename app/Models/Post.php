@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 class Post extends Model
 {
     use HasFactory;
@@ -25,8 +26,32 @@ class Post extends Model
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 
-    public function allComments(){
-        return $this->morphTo();
+    public function getAllCommentsAttribute()
+    {
+        $comments = Comment::where('commentable_id', $this->id)->with('user')->get();
+        $comments_by_id = new Collection;
+
+        foreach ($comments as $comment)
+        {
+            $comments_by_id->put($comment->id, $comment);
+        }
+
+
+        foreach ($comments as $key => $comment)
+        {
+            $comments_by_id->get($comment->id)->replies = new Collection;
+
+            if (!is_null($comment->parent_id))
+            {
+                $comments_by_id->get($comment->parent_id)->replies->push($comment);
+                unset($comments[$key]);
+            }
+        }
+        return $comments->values();
+    }
+
+    public function getTotalCommentsAttribute(){
+        return Comment::where('commentable_id', $this->id)->count();
     }
 
     public function userCanSee()

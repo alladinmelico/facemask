@@ -1,9 +1,9 @@
 <template>
-	<v-container>
+	<v-container class="comment ml-2">
 		<v-row
 			v-for="comment in comments"
 			:key="comment.id"
-			class="d-flex flex-column"
+			class="d-flex flex-column ml-1"
 		>
 			<strong>{{ comment.user.name }}</strong>
 
@@ -14,7 +14,7 @@
 				>
 			</p>
 
-			<v-container class="mb-5">
+			<v-container>
 				<form
 					v-if="commentId == comment.id"
 					@submit.prevent="submit"
@@ -26,12 +26,23 @@
 					</v-btn>
 				</form>
 			</v-container>
+			<v-container>
+				<comment
+					v-if="comment.replies.length > 0"
+					:comments="comment.replies"
+					:postId="comment.commentable_id"
+				></comment>
+			</v-container>
 		</v-row>
 	</v-container>
 </template>
 
 <script>
+import Comment from '@/Components/Post/Comment'
+
 export default {
+	name: 'Comment',
+	components: { Comment },
 	props: {
 		comments: Array,
 		postId: Number
@@ -41,6 +52,9 @@ export default {
 			commentId: '',
 			reply: ''
 		}
+	},
+	mounted() {
+		console.log(this.comments)
 	},
 	computed: {
 		form() {
@@ -63,4 +77,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.comment {
+	border-left: solid 3px transparent;
+}
+.comment:hover {
+	border-left-color: lightgray;
+}
+</style>
