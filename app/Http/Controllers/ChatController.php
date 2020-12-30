@@ -3,81 +3,79 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
-
+use Inertia\Inertia;
 class ChatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Inertia::render('User/Chat');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function fetchAllMessages(User $user)
+    {
+        $chatIds = Chat::where([['sender_id','=',auth()->user()->id],['receiver_id','=',$user->id]])
+        ->orWhere(function($query) use($user){
+            $query->where([['sender_id','=',$user->id],['receiver_id','=',auth()->user()->id]]);
+        })->select('id')->get()->toArray();
+        $chatIds = array_column($chatIds, 'id');
+
+        return Message::with('chat')->whereIn('chat_id',$chatIds)->orderBy('created_at','ASC')->get();
+        // return Chat::where([['sender_id','=',auth()->user()->id],['receiver_id','=',$user->id]])
+        //             ->orWhere(function($query) use($user){
+        //                 $query->where([['sender_id','=',$user->id],['receiver_id','=',auth()->user()->id]]);
+        //             })
+        //             ->with(['messages','sender','receiver'])->get();
+
+    }
+
+    public function fetchAllChats()
+    {
+        return Chat::where('sender_id',auth()->user()->id)
+                    ->orWhere('receiver_id',auth()->user()->id)
+                    ->with(['messages','sender','receiver'])->orderBy('created_at', 'DESC')->get();
+
+    }
+
+    public function sendMessage(Request $request)
+    {
+        dd($request);
+    	$chat = auth()->user()->messages()->create([
+            'message' => $request->message
+        ]);
+
+    	broadcast(new ChatEvent($chat->load('user')))->toOthers();
+
+    	return ['status' => 'success'];
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function show(Chat $chat)
     {
-        //
+        return Inertia::render('User/Chat', compact('chat'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Chat $chat)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Chat $chat)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Chat $chat)
     {
         //

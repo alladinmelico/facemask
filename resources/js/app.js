@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaForm } from 'laravel-jetstream'
 import PortalVue from 'portal-vue'
+import VueChatScroll from 'vue-chat-scroll'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -15,6 +16,7 @@ Vue.use(InertiaApp)
 Vue.use(InertiaForm)
 Vue.use(PortalVue)
 Vue.use(Vuetify)
+Vue.use(VueChatScroll)
 
 const app = document.getElementById('app')
 

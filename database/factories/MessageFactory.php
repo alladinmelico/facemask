@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Message;
+use App\Models\Chat;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MessageFactory extends Factory
@@ -22,7 +23,8 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'message' => $this->faker->sentence,
+            'chat_id'=> Chat::inRandomOrder()->first()->getKey()
         ];
     }
 }
