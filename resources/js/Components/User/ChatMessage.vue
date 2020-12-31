@@ -9,16 +9,19 @@
 					class="ma-4"
 				>
 					<v-list-item-avatar
-						v-if="message.chat.receiver_id === $page.user.id"
+						v-if="message.receiver_id === $page.user.id"
 					>
 						<v-img
-							:src="selectedChat.receiver.profile_photo_url"
+							:src="
+								selectedChat.messages[0].receiver
+									.profile_photo_url
+							"
 						></v-img>
 					</v-list-item-avatar>
 					<v-list-item-content
 						v-text="message.message"
 						:class="
-							message.chat.receiver_id === $page.user.id
+							message.receiver_id === $page.user.id
 								? 'rounded-r-lg'
 								: 'rounded-l-lg'
 						"
@@ -27,13 +30,16 @@
 					</v-list-item-content>
 
 					<v-list-item-avatar
-						v-if="message.chat.receiver_id !== $page.user.id"
+						v-if="message.receiver_id !== $page.user.id"
 					>
 						<v-img :src="$page.user.profile_photo_url"></v-img>
 					</v-list-item-avatar>
 				</v-list-item>
 			</v-list>
 		</v-card-text>
+		<v-card-subtitle>
+			<slot></slot>
+		</v-card-subtitle>
 	</v-card>
 </template>
 

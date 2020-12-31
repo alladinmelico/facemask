@@ -22,18 +22,9 @@ class ChatFactory extends Factory
      */
     public function definition()
     {
-        $sender_id = User::inRandomOrder()->first()->getKey();
-        $receiver_id = User::inRandomOrder()->first()->getKey();
-        while($sender_id == $receiver_id){
-            $receiver_id = User::inRandomOrder()->first()->getKey();
-            if(Chat::where([['sender_id','=',$sender_id], ['receiver_id','=',$receiver_id]])->get()->isNotEmpty()){
-                $receiver_id = User::inRandomOrder()->first()->getKey();
-            }
-        }
 
         return [
-            'sender_id' => $sender_id,
-            'receiver_id' => $receiver_id
+            //
         ];
     }
 }

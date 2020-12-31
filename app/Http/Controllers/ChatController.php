@@ -16,29 +16,20 @@ class ChatController extends Controller
         return Inertia::render('User/Chat');
     }
 
-    public function fetchAllMessages(User $user)
+    public function fetchAllMessages($chat)
     {
-        $chatIds = Chat::where([['sender_id','=',auth()->user()->id],['receiver_id','=',$user->id]])
-        ->orWhere(function($query) use($user){
-            $query->where([['sender_id','=',$user->id],['receiver_id','=',auth()->user()->id]]);
-        })->select('id')->get()->toArray();
-        $chatIds = array_column($chatIds, 'id');
-
-        return Message::with('chat')->whereIn('chat_id',$chatIds)->orderBy('created_at','ASC')->get();
-        // return Chat::where([['sender_id','=',auth()->user()->id],['receiver_id','=',$user->id]])
-        //             ->orWhere(function($query) use($user){
-        //                 $query->where([['sender_id','=',$user->id],['receiver_id','=',auth()->user()->id]]);
-        //             })
-        //             ->with(['messages','sender','receiver'])->get();
+        return Message::where('chat_id',$chat)->with(['sender','receiver'])->orderBy('created_at','ASC')->get();
 
     }
 
     public function fetchAllChats()
     {
-        return Chat::where('sender_id',auth()->user()->id)
-                    ->orWhere('receiver_id',auth()->user()->id)
-                    ->with(['messages','sender','receiver'])->orderBy('created_at', 'ASC')->get();
-
+        return Chat::with(['messages'=>function($query){
+            $query->where('sender_id',auth()->user()->id)
+            ->orWhere('receiver_id',auth()->user()->id);
+        },'messages.sender','messages.receiver'])->has('messages')->orderBy('created_at','ASC')->get()->filter(function($chat, $key){
+            return $chat->messages->isNotEmpty();
+        })->values();
     }
 
     public function sendMessage(Request $request)
@@ -48,17 +39,22 @@ class ChatController extends Controller
             'receiver_id'=>'exists:users,id'
         ]);
 
-    	$chat = Chat::where([['sender_id',auth()->user()->id],['receiver_id',$validatedData['receiver_id']]])->first();
-        if(is_null($chat)){
-            $chat = Chat::create(['sender_id'=>auth()->user()->id,'receiver_id'=>$validatedData['receiver_id']]);
+        $chat = Message::where([['sender_id',auth()->user()->id],['receiver_id',$validatedData['receiver_id']]])
+                    ->orWhere(function($query) use($validatedData){
+                        $query->where([['sender_id',$validatedData['receiver_id']],['receiver_id',auth()->user()->id]]);
+                    })->first()->only(['chat_id']);
 
+        $chat = Chat::find($chat['chat_id']);
+        if(is_null($chat)){
+            $chat = Chat::create();
         }
 
         $message = new Message();
         $message->message = $validatedData['message'];
+        $message->sender_id = auth()->user()->id;
+        $message->receiver_id = $validatedData['receiver_id'];
         $message->chat()->associate($chat);
         $message->save();
-        $message->chat = $chat;
 
         broadcast(new ChatMessage($message))->toOthers();
         return $message;
@@ -93,4 +89,6 @@ class ChatController extends Controller
     {
         //
     }
+
+        //TODO: Seen message
 }

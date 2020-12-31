@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('follow/{user}', [FollowerController::class, 'store']);
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
     Route::post('/chat/message',[ChatController::class, 'sendMessage']);
-    Route::get('/chat/fetchAllMessages/{user}', [ChatController::class, 'fetchAllMessages']);
+    Route::get('/chat/fetchAllMessages/{chat}', [ChatController::class, 'fetchAllMessages']);
     Route::get('/chat/fetchAllChats', [ChatController::class, 'fetchAllChats']);
     Route::get('/chat/{chat}', [ChatController::class,'show']);
     // Route::get('chat/{user}', ShowChats::class)->name('chat.show');

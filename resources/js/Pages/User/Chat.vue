@@ -7,11 +7,13 @@
 					<v-list-item v-for="chat in chats" :key="chat.id">
 						<v-list-item-avatar>
 							<v-img
-								:alt="`${chat.receiver.id} avatar`"
+								:alt="`${chat.messages[0].receiver_id} avatar`"
 								:src="
-									chat.sender_id === $page.user.id
-										? chat.receiver.profile_photo_url
-										: chat.sender.profile_photo_url
+									chat.messages[0].sender_id === $page.user.id
+										? chat.messages[0].receiver
+												.profile_photo_url
+										: chat.messages[0].sender
+												.profile_photo_url
 								"
 							></v-img>
 						</v-list-item-avatar>
@@ -19,9 +21,9 @@
 						<v-list-item-content>
 							<v-list-item-title
 								v-text="
-									chat.sender_id === $page.user.id
-										? chat.receiver.name
-										: chat.sender.name
+									chat.messages[0].sender_id === $page.user.id
+										? chat.messages[0].receiver.name
+										: chat.messages[0].sender.name
 								"
 							></v-list-item-title>
 						</v-list-item-content>
@@ -30,10 +32,13 @@
 			</v-list>
 		</v-col>
 		<v-col cols="8">
-			<chat-message
-				:messages="messages"
-				:selectedChat="selectedChat"
-			></chat-message>
+			<chat-message :messages="messages" :selectedChat="selectedChat">
+				<span
+					class="font-italic font-weight-thin text-caption"
+					v-if="activeUser"
+					>{{ activeUser.name }} is typing...
+				</span>
+			</chat-message>
 
 			<v-text-field
 				@keydown="sendTypingEvent"
@@ -43,9 +48,6 @@
 				name="message"
 				placeholder="Enter your message..."
 			></v-text-field>
-			<span class="text-muted" v-if="activeUser"
-				>{{ activeUser.name }} is typing...</span
-			>
 		</v-col>
 	</v-row>
 </template>
@@ -83,9 +85,10 @@ export default {
 			return {
 				message: this.newMessage,
 				receiver_id:
-					this.selectedChat.receiver_id === this.$page.user.id
-						? this.selectedChat.sender_id
-						: this.selectedChat.receiver_id
+					this.selectedChat.messages[0].receiver_id ===
+					this.$page.user.id
+						? this.selectedChat.messages[0].sender_id
+						: this.selectedChat.messages[0].receiver_id
 			}
 		}
 	},
@@ -95,7 +98,7 @@ export default {
 	methods: {
 		fetchMessages() {
 			axios
-				.get(`/chat/fetchAllMessages/${this.receiverId}`)
+				.get(`/chat/fetchAllMessages/${this.selectedChat.id}`)
 				.then(response => {
 					this.messages = response.data
 				})
@@ -103,6 +106,7 @@ export default {
 		fetchChats() {
 			axios.get('/chat/fetchAllChats').then(response => {
 				this.chats = response.data
+				console.log(response.data)
 			})
 		},
 		sendMessage() {
@@ -112,28 +116,34 @@ export default {
 			this.newMessage = ''
 		},
 		sendTypingEvent() {
-			// Echo.join('chat').whisper('typing', this.user)
-			// console.log(this.user.name + ' is typing now')
+			Echo.private(`chat.${this.selectedChat.id}`).whisper('typing', {
+				user: this.$page.user
+			})
 		}
 	},
 	watch: {
 		selectedChatIndex() {
-			console.log(this.selectedChatIndex)
 			if (this.selectedChatIndex == undefined) {
 				this.messages = []
 				this.selectedChat = {}
-				return null
+				return
 			}
 			this.selectedChat = this.chats[this.selectedChatIndex]
 			this.fetchMessages()
-
-			Echo.private(`chat.${this.selectedChat.id}`).listen(
-				'ChatMessage',
-				e => {
+			console.log(this.selectedChat.messages)
+			Echo.private(`chat.${this.selectedChat.id}`)
+				.listen('ChatMessage', e => {
 					this.messages.push(e.message)
-					console.log(e.message)
-				}
-			)
+				})
+				.listenForWhisper('typing', e => {
+					this.activeUser = e.user
+					if (this.typingTimer) {
+						clearTimeout(this.typingTimer)
+					}
+					this.typingTimer = setTimeout(() => {
+						this.activeUser = false
+					}, 1000)
+				})
 
 			// Echo.join('chat')
 			// 	.here(user => {
@@ -161,3 +171,5 @@ export default {
 	}
 }
 </script>
+
+<style scoped></style>

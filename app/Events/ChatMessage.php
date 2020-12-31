@@ -29,7 +29,7 @@ class ChatMessage implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat.'.$this->message->chat->id);
+        return new PrivateChannel('chat.'.$this->message->chat_id);
     }
 
     //TODO: Wrong chat id
