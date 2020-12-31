@@ -7,18 +7,26 @@
 			<v-avatar :tile="true">
 				<v-img :src="'../storage/img/logo.png'" alt="logo"></v-img>
 			</v-avatar>
-			<v-toolbar-title class="ml-3">facemask</v-toolbar-title>
+			<v-toolbar-title v-if="!$vuetify.breakpoint.xs" class="ml-3"
+				>facemask</v-toolbar-title
+			>
 
 			<v-spacer></v-spacer>
 
-			<v-btn icon>
-				<v-icon>mdi-magnify</v-icon>
-			</v-btn>
+			<v-text-field
+				append-icon="mdi-magnify"
+				dense
+				single-line
+				hide-details
+				v-model="searchTerm"
+				@keyup.enter="search"
+			></v-text-field>
 
+			<v-spacer></v-spacer>
 			<v-switch
 				v-model="$vuetify.theme.dark"
 				inset
-				label="Dark Mode"
+				:label="$vuetify.breakpoint.xs ? '' : 'Dark Mode'"
 				class="mt-5"
 			/>
 		</v-app-bar>
@@ -76,13 +84,17 @@ export default {
 	components: { NavigationList, AppFooter, ApplicationLogo },
 	data: () => ({
 		links: ['Dashboard', 'Messages', 'Profile', 'Updates'],
-		drawer: false
+		drawer: false,
+		searchTerm: ''
 	}),
 	methods: {
 		logout() {
 			axios.post(route('logout').url()).then(response => {
 				window.location = '/'
 			})
+		},
+		search() {
+			this.$inertia.get(route('search'), { search: this.searchTerm })
 		}
 	}
 }

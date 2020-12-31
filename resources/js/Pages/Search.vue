@@ -132,6 +132,15 @@ export default {
 		return {
 			tab: null
 		}
+	},
+	methods: {
+		mark(text) {
+			const queryString = window.location.search
+			const urlParams = new URLSearchParams(queryString)
+			const term = urlParams.get('search')
+			const regex = new RegExp(term, 'g')
+			return text.replace(regex, '<span id="mark">' + term + '</span>')
+		}
 	}
 }
 </script>
