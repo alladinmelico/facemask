@@ -1,8 +1,12 @@
 <template>
 	<v-row class="mt-5">
 		<v-col cols="4">
-			<v-list rounded>
-				<v-list-item-group v-model="selectedChatIndex" color="primary">
+			<v-list rounded v-chat-scroll id="chatList">
+				<v-list-item-group
+					v-model="selectedChatIndex"
+					color="primary"
+					mandatory
+				>
 					<v-subheader>Chats</v-subheader>
 					<v-list-item v-for="chat in chats" :key="chat.id">
 						<v-list-item-avatar>
@@ -32,7 +36,11 @@
 			</v-list>
 		</v-col>
 		<v-col cols="8">
-			<chat-message :messages="messages" :selectedChat="selectedChat">
+			<chat-message
+				v-if="selectedChat.id !== undefined"
+				:messages="messages"
+				:selectedChat="selectedChat"
+			>
 				<span
 					class="font-italic font-weight-thin text-caption"
 					v-if="activeUser"
@@ -106,19 +114,53 @@ export default {
 		fetchChats() {
 			axios.get('/chat/fetchAllChats').then(response => {
 				this.chats = response.data
-				console.log(response.data)
+				this.getUrlParam()
 			})
 		},
 		sendMessage() {
 			axios.post('/chat/message', this.form).then(response => {
-				this.messages.push(response.data)
+				if (this.selectedChat.id != undefined) {
+					this.messages.push(response.data)
+				} else {
+					this.selectedChatIndex = null
+					this.fetchChats()
+				}
 			})
 			this.newMessage = ''
 		},
 		sendTypingEvent() {
-			Echo.private(`chat.${this.selectedChat.id}`).whisper('typing', {
-				user: this.$page.user
+			if (this.selectedChat.id != undefined) {
+				Echo.private(`chat.${this.selectedChat.id}`).whisper('typing', {
+					user: this.$page.user
+				})
+			}
+		},
+		getUrlParam() {
+			const queryString = window.location.search
+			const urlParams = new URLSearchParams(queryString)
+			const userId = urlParams.get('user')
+			this.chats.forEach((chat, index) => {
+				if (chat.messages[0].receiver_id == userId) {
+					this.selectedChatIndex = index
+					return
+				}
 			})
+
+			if (this.selectedChatIndex === '') {
+				axios.get('/user/getUser/' + userId).then(response => {
+					this.chats.push({
+						messages: [
+							{
+								sender: response.data,
+								receiver: this.$page.user,
+								sender_id: response.data.id,
+								receiver_id: this.$page.user.id
+							}
+						]
+					})
+					this.selectedChatIndex = this.chats.length - 1
+				})
+			}
 		}
 	},
 	watch: {
@@ -129,47 +171,31 @@ export default {
 				return
 			}
 			this.selectedChat = this.chats[this.selectedChatIndex]
-			this.fetchMessages()
-			console.log(this.selectedChat.messages)
-			Echo.private(`chat.${this.selectedChat.id}`)
-				.listen('ChatMessage', e => {
-					this.messages.push(e.message)
-				})
-				.listenForWhisper('typing', e => {
-					this.activeUser = e.user
-					if (this.typingTimer) {
-						clearTimeout(this.typingTimer)
-					}
-					this.typingTimer = setTimeout(() => {
-						this.activeUser = false
-					}, 1000)
-				})
-
-			// Echo.join('chat')
-			// 	.here(user => {
-			// 		this.users = user
-			// 	})
-			// 	.joining(user => {
-			// 		this.users.push(user)
-			// 	})
-			// 	.leaving(user => {
-			// 		this.users = this.users.filter(u => u.id != user.id)
-			// 	})
-			// 	.listen('ChatEvent', event => {
-			// 		this.messages.push(event.chat)
-			// 	})
-			// 	.listenForWhisper('typing', user => {
-			// 		this.activeUser = user
-			// 		if (this.typingTimer) {
-			// 			clearTimeout(this.typingTimer)
-			// 		}
-			// 		this.typingTimer = setTimeout(() => {
-			// 			this.activeUser = false
-			// 		}, 1000)
-			// 	})
+			console.log(this.selectedChatIndex)
+			if (this.selectedChat.id != undefined) {
+				this.fetchMessages()
+				Echo.private(`chat.${this.selectedChat.id}`)
+					.listen('ChatMessage', e => {
+						this.messages.push(e.message)
+					})
+					.listenForWhisper('typing', e => {
+						this.activeUser = e.user
+						if (this.typingTimer) {
+							clearTimeout(this.typingTimer)
+						}
+						this.typingTimer = setTimeout(() => {
+							this.activeUser = false
+						}, 1000)
+					})
+			}
 		}
 	}
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+#chatList {
+	max-height: 70vh;
+	overflow-y: scroll;
+}
+</style>

@@ -1,13 +1,16 @@
 <template>
-	<v-card>
+	<v-card raised rounded="lg">
 		<v-card-title primary-title>Messages </v-card-title>
 		<v-card-text>
-			<v-list>
+			<v-list id="messageScroll" v-chat-scroll>
 				<v-list-item
 					v-for="message in messages"
 					:key="message.id"
 					class="ma-4"
 				>
+					<v-spacer
+						v-if="message.receiver_id !== $page.user.id"
+					></v-spacer>
 					<v-list-item-avatar
 						v-if="message.receiver_id === $page.user.id"
 					>
@@ -34,6 +37,9 @@
 					>
 						<v-img :src="$page.user.profile_photo_url"></v-img>
 					</v-list-item-avatar>
+					<v-spacer
+						v-if="message.receiver_id === $page.user.id"
+					></v-spacer>
 				</v-list-item>
 			</v-list>
 		</v-card-text>
@@ -52,4 +58,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+#messageScroll {
+	max-height: 70vh;
+	overflow-y: scroll;
+}
+</style>

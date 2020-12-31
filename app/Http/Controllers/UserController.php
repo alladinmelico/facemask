@@ -87,4 +87,8 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Cover updated successfully');
     }
+
+    public function getUser(User $user){
+        return $user;
+    }
 }

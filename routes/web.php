@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('user',UserController::class);
+    Route::get('/user/getUser/{user}',[UserController::class,'getUser']);
     Route::resource('post',PostController::class);
     Route::put('updatePostCover', [PostController::class, 'updateCover'])->name('updatePostCover');
     Route::put('updateCover', [UserController::class, 'updateCover'])->name('updateCover');

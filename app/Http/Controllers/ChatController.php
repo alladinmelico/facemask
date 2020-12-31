@@ -32,21 +32,34 @@ class ChatController extends Controller
         })->values();
     }
 
+    public function fetchAllFriends(){
+        return Chat::with(['messages'=>function($query){
+            $query->where('sender_id',auth()->user()->id)
+            ->orWhere('receiver_id',auth()->user()->id);
+        },'messages.sender','messages.receiver'])->has('messages')->orderBy('created_at','ASC')->get()->filter(function($chat, $key){
+            return $chat->messages->isNotEmpty();
+        })->values();
+    }
+
     public function sendMessage(Request $request)
     {
         $validatedData = $request->validate([
             'message' => 'required',
             'receiver_id'=>'exists:users,id'
         ]);
+        try {
+            $chat = Message::where([['sender_id',auth()->user()->id],['receiver_id',$validatedData['receiver_id']]])
+                        ->orWhere(function($query) use($validatedData){
+                            $query->where([['sender_id',$validatedData['receiver_id']],['receiver_id',auth()->user()->id]]);
+                        })->first();
+        } catch (\Throwable $th) {
 
-        $chat = Message::where([['sender_id',auth()->user()->id],['receiver_id',$validatedData['receiver_id']]])
-                    ->orWhere(function($query) use($validatedData){
-                        $query->where([['sender_id',$validatedData['receiver_id']],['receiver_id',auth()->user()->id]]);
-                    })->first()->only(['chat_id']);
+        }
 
-        $chat = Chat::find($chat['chat_id']);
         if(is_null($chat)){
             $chat = Chat::create();
+        } else {
+            $chat = Chat::find($chat->chat_id);
         }
 
         $message = new Message();
