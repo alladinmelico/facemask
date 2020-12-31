@@ -31,8 +31,35 @@ class SearchController extends Controller
 
                         ];
                 });
-        $comments = Comment::where('comment','like',$toSearch)->with('user')->get();
-        $users = User::where('name','like',$toSearch)->orWhere('email','like',$toSearch)->get();
+        $comments = Comment::where('comment','like',$toSearch)
+                            ->with('user')
+                            ->orderBy('updated_at','DESC')
+                            ->paginate(10)
+                            ->transform(function($comment){
+                                return [
+                                    'id' => $comment->id,
+                                    'comment' => $comment->comment,
+                                    'user' => $comment->user,
+                                    'is_follower' => $comment->user->is_follower,
+                                    'post_id' => $comment->commentable_id
+                                ];
+                            });
+        $users = User::where('name','like',$toSearch)->orWhere('email','like',$toSearch)
+                        ->orderBy('updated_at','DESC')
+                        ->paginate(10)
+                        ->transform(function($user){
+                            return [
+                                'id' => $user->id,
+                                'name' => $user->name,
+                                'email' => $user->email,
+                                'profile_photo_path' => $user->profile_photo_path,
+                                'profile_photo_url' => $user->profile_photo_url,
+                                'is_tag_approved' => $user->is_tag_approved,
+                                'is_private' => $user->is_private,
+                                'is_follower' => $user->is_follower,
+                                'tag' => $user->tag
+                            ];
+                        });
 
         return Inertia::render('Search',compact('posts','comments','users'));
     }

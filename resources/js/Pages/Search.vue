@@ -61,6 +61,16 @@
 											class="headline font-weight-bold"
 										>
 											{{ `"${comment.comment}"` }}
+											<inertia-link
+												:href="
+													route(
+														'post.show',
+														comment.post_id
+													)
+												"
+											>
+												<v-btn small>Read Post</v-btn>
+											</inertia-link>
 										</v-card-text>
 
 										<v-card-actions>
@@ -72,6 +82,9 @@
 												"
 												:imgSize="40"
 												:tagName="comment.user.tag.name"
+												:isFollower="
+													comment.is_follower
+												"
 											></user-badge>
 										</v-card-actions>
 									</v-card>
@@ -94,6 +107,7 @@
 											:imgSize="60"
 											:nameSize="'header'"
 											:tagName="user.tag.name"
+											:isFollower="user.is_follower"
 										>
 										</user-badge>
 										<v-container
