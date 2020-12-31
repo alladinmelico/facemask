@@ -5,7 +5,11 @@
 				<inertia-link :href="item.route">
 					<v-list-item ripple class="pa-1">
 						<v-list-item-icon>
-							<v-icon>{{ item.icon }}</v-icon>
+							<v-hover v-slot="{ hover }">
+								<v-icon>{{
+									hover ? item.icon : item.iconOutline
+								}}</v-icon>
+							</v-hover>
 						</v-list-item-icon>
 
 						<v-list-item-content>
@@ -26,17 +30,20 @@ export default {
 			items: [
 				{
 					title: 'Users',
-					icon: 'mdi-account-group-outline',
+					icon: 'mdi-account-group',
+					iconOutline: 'mdi-account-group-outline',
 					route: this.$route('user.index')
 				},
 				{
 					title: 'Posts',
-					icon: 'mdi-post-outline',
+					icon: 'mdi-post',
+					iconOutline: 'mdi-post-outline',
 					route: this.$route('post.index')
 				},
 				{
 					title: 'Chats',
-					icon: 'mdi-message-outline',
+					icon: 'mdi-message',
+					iconOutline: 'mdi-message-outline',
 					route: this.$route('chat')
 				}
 			]

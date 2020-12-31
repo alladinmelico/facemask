@@ -1,5 +1,11 @@
 <template>
-	<v-card elevation="3" :max-width="width" tile class="mx-auto rounded-lg">
+	<v-card
+		v-if="img != ''"
+		elevation="3"
+		:max-width="width"
+		tile
+		class="mx-auto rounded-lg"
+	>
 		<v-img
 			class="white--text align-end"
 			height="200px"
@@ -38,7 +44,12 @@
 			<span class="font-weight-thin font-italic">
 				{{ post.date }}
 			</span>
-			<v-badge color="green" :content="post.total_comments" overlap>
+			<v-badge
+				v-if="post.total_comments != ''"
+				color="grey"
+				:content="post.total_comments"
+				overlap
+			>
 				<v-icon>
 					mdi-comment-multiple
 				</v-icon>
@@ -66,6 +77,13 @@
 			</div>
 		</v-card-actions>
 	</v-card>
+	<v-skeleton-loader
+		v-else
+		class="mx-auto"
+		type="card, article, list-item-avatar"
+		max-width="344"
+		loading
+	></v-skeleton-loader>
 </template>
 
 <script>
