@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/chat/fetchAllMessages/{chat}', [ChatController::class, 'fetchAllMessages']);
     Route::get('/chat/fetchAllChats', [ChatController::class, 'fetchAllChats']);
     Route::get('/chat/{chat}', [ChatController::class,'show']);
+    Route::get('/search',[SearchController::class, 'index'])->name('search');
     // Route::get('chat/{user}', ShowChats::class)->name('chat.show');
     // Route::resource('chat', ShowChats::class);
 });

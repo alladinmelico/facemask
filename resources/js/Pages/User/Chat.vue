@@ -1,7 +1,7 @@
 <template>
 	<v-row class="mt-5">
 		<v-col cols="4">
-			<v-list rounded v-chat-scroll id="chatList">
+			<v-list rounded id="chatList">
 				<v-list-item-group
 					v-model="selectedChatIndex"
 					color="primary"
@@ -139,27 +139,30 @@ export default {
 			const queryString = window.location.search
 			const urlParams = new URLSearchParams(queryString)
 			const userId = urlParams.get('user')
-			this.chats.forEach((chat, index) => {
-				if (chat.messages[0].receiver_id == userId) {
-					this.selectedChatIndex = index
-					return
-				}
-			})
 
-			if (this.selectedChatIndex === '') {
-				axios.get('/user/getUser/' + userId).then(response => {
-					this.chats.push({
-						messages: [
-							{
-								sender: response.data,
-								receiver: this.$page.user,
-								sender_id: response.data.id,
-								receiver_id: this.$page.user.id
-							}
-						]
-					})
-					this.selectedChatIndex = this.chats.length - 1
+			if (userId !== null) {
+				this.chats.forEach((chat, index) => {
+					if (chat.messages[0].receiver_id == userId) {
+						this.selectedChatIndex = index
+						return
+					}
 				})
+
+				if (this.selectedChatIndex === '') {
+					axios.get('/user/getUser/' + userId).then(response => {
+						this.chats.push({
+							messages: [
+								{
+									sender: response.data,
+									receiver: this.$page.user,
+									sender_id: response.data.id,
+									receiver_id: this.$page.user.id
+								}
+							]
+						})
+						this.selectedChatIndex = this.chats.length - 1
+					})
+				}
 			}
 		}
 	},
