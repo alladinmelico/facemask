@@ -41,7 +41,16 @@
 			</template>
 			{{ isFollower ? 'Unfollow' : 'Follow' }}
 		</v-tooltip>
-
+		<v-hover
+			v-if="userBadge !== undefined && userBadge.id !== $page.user.id"
+			v-slot="{ hover }"
+		>
+			<inertia-link :href="`${route('chat')}/?user=${userBadge.id}`">
+				<v-icon>
+					{{ hover ? 'mdi-message' : 'mdi-message-outline' }}
+				</v-icon>
+			</inertia-link>
+		</v-hover>
 		<slot></slot>
 	</v-container>
 </template>
@@ -96,12 +105,10 @@ export default {
 	methods: {
 		updateFollow() {
 			if (this.isFollower) {
-				console.log('unfollow')
 				this.$inertia.delete('/unfollow/' + this.userBadge.id, {
 					preserveScroll: true
 				})
 			} else {
-				console.log('follow')
 				this.$inertia.post('/follow/' + this.userBadge.id, {
 					preserveScroll: true
 				})

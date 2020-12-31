@@ -92,7 +92,6 @@ export default {
 	},
 	mounted() {
 		this.getImage()
-		console.log(this.post)
 	},
 	computed: {
 		form() {

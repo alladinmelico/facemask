@@ -171,7 +171,6 @@ export default {
 				return
 			}
 			this.selectedChat = this.chats[this.selectedChatIndex]
-			console.log(this.selectedChatIndex)
 			if (this.selectedChat.id != undefined) {
 				this.fetchMessages()
 				Echo.private(`chat.${this.selectedChat.id}`)
