@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Gate;
@@ -27,8 +29,9 @@ class PostController extends Controller
                     'user_id' => $post->user_id,
                     'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url']),
                     'is_follower' => $post->user->is_follower,
-                    'total_comments' => $post->total_comments
-
+                    'total_comments' => $post->total_comments,
+                    'liked' => $post->is_liked,
+                    'bookmarked'=> $post->is_bookmarked
                 ];
         });
         return Inertia::render('Post/Index',compact('posts'));
@@ -60,7 +63,6 @@ class PostController extends Controller
 
         $post = Post::with(['user','comments.user'])->find($post->id);
         $comments = $post->all_comments;
-        // dd($comments);
         return Inertia::render('Post/Show',compact('post','comments'));
     }
 
@@ -108,9 +110,23 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Cover updated successfully');
     }
 
-    public function like(Request $request, Post $post){
-        // $data = ['post']
-        // $post->update()
-        // return
+    public function like(Post $post){
+        $result = $post->likes()->attach(auth()->user());
+        return redirect()->back();
+    }
+
+    public function unlike(Post $post){
+        $post->likes()->detach(auth()->user());
+        return redirect()->back();
+    }
+
+    public function bookmark(Post $post){
+        $post->bookmarks()->attach(auth()->user());
+        return redirect()->back();
+    }
+
+    public function removeBookmark(Post $post){
+        $post->bookmarks()->detach(auth()->user());
+        return redirect()->back();
     }
 }

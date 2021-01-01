@@ -44,6 +44,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/chat/fetchAllChats', [ChatController::class, 'fetchAllChats']);
     Route::get('/chat/{chat}', [ChatController::class,'show']);
     Route::get('/search',[SearchController::class, 'index'])->name('search');
+
+    Route::post('like/{post}',[PostController::class,'like'])->name('like');
+    Route::delete('like/{post}',[PostController::class,'unlike'])->name('unlike');
+
+    Route::post('bookmark/{post}',[PostController::class,'bookmark'])->name('bookmark');
+    Route::delete('bookmark/{post}',[PostController::class,'removeBookmark'])->name('removeBookmark');
     // Route::get('chat/{user}', ShowChats::class)->name('chat.show');
     // Route::resource('chat', ShowChats::class);
 });

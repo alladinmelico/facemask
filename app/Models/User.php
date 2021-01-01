@@ -79,6 +79,19 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'followers', 'user_follower_id', 'user_id');
     }
 
+
+    public function tag(){
+        return $this->belongsTo('App\Models\Tag');
+    }
+
+    public function liked(){
+        return $this->belongsToMany(Post::class, 'like')->using(Like::class)->withTimestamps();
+    }
+
+    public function bookmarked(){
+        return $this->belongsToMany(Post::class, 'bookmark')->using(Bookmark::class)->withTimestamps();
+    }
+
     public function getIsFollowerAttribute(){
         return $this->followers->contains(auth()->user()->id);
     }
@@ -90,15 +103,12 @@ class User extends Authenticatable
         return $value == 1;
     }
 
-    public function tag(){
-        return $this->belongsTo('App\Models\Tag');
+    public function getIsLikedAttribute(){
+        return $this->liked()->get()->pluck('id')->contains(auth()->user()->id);
     }
 
-    public function liked(){
-        return $this->belongsToMany(Post::class, 'like')->using(Like::class);
+    public function getIsBookmarkedAttribute(){
+        return $this->bookmarked()->get()->pluck('id')->contains(auth()->user()->id);
     }
 
-    public function bookmarked(){
-        return $this->belongsToMany(Post::class, 'bookmark')->using(Bookmark::class);
-    }
 }

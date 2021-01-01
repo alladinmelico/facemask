@@ -66,13 +66,30 @@
 			>
 			</user-badge>
 			<v-spacer></v-spacer>
-			<v-divider vertical></v-divider>
-			<div class="d-flex">
-				<v-btn icon>
-					<v-icon>mdi-heart-outline</v-icon>
+			<v-divider vertical v-if="post.liked != undefined"></v-divider>
+			<div v-if="post.liked != undefined" class="d-flex">
+				<v-btn
+					icon
+					@click="$emit('like', { id: post.id, liked: post.liked })"
+				>
+					<v-icon>{{
+						post.liked ? 'mdi-heart' : 'mdi-heart-outline'
+					}}</v-icon>
 				</v-btn>
-				<v-btn icon>
-					<v-icon>mdi-bookmark-outline</v-icon>
+				<v-btn
+					icon
+					@click="
+						$emit('bookmark', {
+							id: post.id,
+							bookmarked: post.bookmarked
+						})
+					"
+				>
+					<v-icon>{{
+						post.bookmarked
+							? 'mdi-bookmark'
+							: 'mdi-bookmark-outline'
+					}}</v-icon>
 				</v-btn>
 			</div>
 		</v-card-actions>

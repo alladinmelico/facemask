@@ -67,11 +67,11 @@ class Post extends Model
     }
 
     public function likes(){
-        return $this->belongsToMany(User::class, 'like')->using(Like::class);
+        return $this->belongsToMany(User::class, 'like')->using(Like::class)->withTimestamps();
     }
 
     public function bookmarks(){
-        return $this->belongsToMany(User::class, 'bookmark')->using(Bookmark::class);
+        return $this->belongsToMany(User::class, 'bookmark')->using(Bookmark::class)->withTimestamps();
     }
 
     public function getTotalLikesAttribute(){
@@ -80,5 +80,13 @@ class Post extends Model
 
     public function getTotalBookmarksAttribute(){
         return $this->bookmarks->count();
+    }
+
+    public function getIsLikedAttribute(){
+        return $this->likes()->get()->pluck('id')->contains(auth()->user()->id);
+    }
+
+    public function getIsBookmarkedAttribute(){
+        return $this->bookmarks()->get()->pluck('id')->contains(auth()->user()->id);
     }
 }
