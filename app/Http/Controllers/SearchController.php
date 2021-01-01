@@ -11,6 +11,9 @@ use App\Models\User;
 class SearchController extends Controller
 {
     public function index(Request $request){
+        if($request->search == ''){
+            return redirect()->back();
+        }
         $toSearch = '%'.$request->search.'%';
 
         $posts = Post::where('name','like',$toSearch)->orWhere('body','like',$toSearch)

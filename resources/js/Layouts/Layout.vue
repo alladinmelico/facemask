@@ -94,7 +94,9 @@ export default {
 			})
 		},
 		search() {
-			this.$inertia.get(route('search'), { search: this.searchTerm })
+			if (this.searchTerm !== '') {
+				this.$inertia.get(route('search'), { search: this.searchTerm })
+			}
 		}
 	}
 }

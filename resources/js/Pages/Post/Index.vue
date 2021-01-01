@@ -16,6 +16,7 @@
 				></post-card>
 			</v-col>
 		</v-row>
+		<pagination :links="postLinks" />
 	</v-container>
 </template>
 
@@ -23,6 +24,7 @@
 import Layout from '@/Layouts/Layout'
 import PostCard from '../../Components/PostCard.vue'
 import FormDialog from '@/Components/Post/FormDialog.vue'
+import Pagination from '@/Components/Pagination'
 
 export default {
 	metaInfo() {
@@ -32,10 +34,11 @@ export default {
 	},
 	components: {
 		PostCard,
-		FormDialog
+		FormDialog,
+		Pagination
 	},
 	layout: Layout,
-	props: { posts: Array },
+	props: { posts: Array, postLinks: Array },
 	data() {
 		return {
 			showModal: false
