@@ -53,9 +53,7 @@ export default {
 			reply: ''
 		}
 	},
-	mounted() {
-		console.log(this.comments)
-	},
+	mounted() {},
 	computed: {
 		form() {
 			return {
