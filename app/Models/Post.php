@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Bookmark;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 class Post extends Model
@@ -62,5 +64,21 @@ class Post extends Model
     public function getDateAttribute()
     {
         return Carbon::createFromTimeStamp(strtotime($this->created_at))->diffForHumans();
+    }
+
+    public function likes(){
+        return $this->belongsToMany(User::class, 'like')->using(Like::class);
+    }
+
+    public function bookmarks(){
+        return $this->belongsToMany(User::class, 'bookmark')->using(Bookmark::class);
+    }
+
+    public function getTotalLikesAttribute(){
+        return $this->likes->count();
+    }
+
+    public function getTotalBookmarksAttribute(){
+        return $this->bookmarks->count();
     }
 }

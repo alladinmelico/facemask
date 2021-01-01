@@ -23,3 +23,5 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
 });
+
+// TODO: Separate api requests from web routes

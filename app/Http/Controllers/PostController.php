@@ -107,4 +107,10 @@ class PostController extends Controller
 
         return redirect()->back()->with('success', 'Cover updated successfully');
     }
+
+    public function like(Request $request, Post $post){
+        // $data = ['post']
+        // $post->update()
+        // return
+    }
 }

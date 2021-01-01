@@ -9,7 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Like;
+use App\Models\Bookmark;
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -91,5 +92,13 @@ class User extends Authenticatable
 
     public function tag(){
         return $this->belongsTo('App\Models\Tag');
+    }
+
+    public function liked(){
+        return $this->belongsToMany(Post::class, 'like')->using(Like::class);
+    }
+
+    public function bookmarked(){
+        return $this->belongsToMany(Post::class, 'bookmark')->using(Bookmark::class);
     }
 }

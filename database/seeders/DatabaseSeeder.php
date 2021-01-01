@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             FollowerSeeder::class,
             ChatSeeder::class,
-            MessageSeeder::class
+            MessageSeeder::class,
+            LikeSeeder::class,
+            BookmarkSeeder::class
         ]);
     }
 }
