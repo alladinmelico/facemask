@@ -32,7 +32,7 @@
 export default {
 	data() {
 		return {
-			selectedItem: 1,
+			selectedItem: null,
 			items: [
 				{
 					title: 'Dashboard',

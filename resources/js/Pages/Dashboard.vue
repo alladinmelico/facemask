@@ -22,23 +22,27 @@
 				></post-card>
 			</v-col>
 		</v-row>
+		<pagination :links="postLinks" />
 	</v-container>
 </template>
 
 <script>
 import Layout from '@/Layouts/Layout'
 import PostCard from '@/Components/PostCard'
+import Pagination from '@/Components/Pagination'
 
 export default {
 	layout: Layout,
 	components: {
-		PostCard
+		PostCard,
+		Pagination
 	},
 	props: {
 		posts: Array,
 		followers: Number,
 		followings: Number,
-		totalPosts: Number
+		totalPosts: Number,
+		postLinks: Array
 	},
 	computed: {
 		stats() {
