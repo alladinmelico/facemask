@@ -29,12 +29,13 @@
           <v-app>
             <v-app-bar
               app
-              color="yellow lighten-2"
+              color="secondary primary--text"
               height="100"
             >
               <v-avatar
                 class="mr-3"
                 size="70"
+                color="white"
               >
                 <v-img  contain max-height="70%" :src="'../storage/img/logo.png'" alt="logo"></v-img>
 
@@ -48,12 +49,17 @@
               @if (Route::has('login'))
                     <div class="ml-auto">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="grey--text darken-4 text-decoration-underline">Dashboard</a>
+                            <v-btn rounded color="primary">
+                                <a href="{{ url('/dashboard') }}" class="secondary--text ">Dashboard</a>
+                            </v-btn>
                         @else
-                            <a href="{{ route('login') }}" class="grey--text darken-4 text-decoration-underline">Login</a>
-
+                            <v-btn rounded >
+                                <a href="{{ route('login') }}" class="secondary--text ">Login</a>
+                            </v-btn>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="grey--text darken-4 text-decoration-underline ml-4">Register</a>
+                                <v-btn rounded color="primary" >
+                                <a href="{{ route('register') }}" class="secondary--text ">Register</a>
+                                </v-btn>
                             @endif
                         @endauth
                     </div>
@@ -398,20 +404,20 @@
                 date: (new Date()).getFullYear(),
                 articles: [
                   {
-                    src: 'https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+                    src: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80',
                     title: 'Planning 🤔',
                     text: "What I'm building? I'll list all features on my last post. Basically, this is a mini socmed app just to share people's experiences during this pandemic. About their struggles to quarantine themselves, how we miss the old normal, and how we can all survive.",
                     link: 'https://dev.to/alladinmelico/facemask-a-mini-social-media-app-for-sharing-pandemic-experiences-1-n-44dj'
                   },
                   {
-                    src: 'https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
+                    src: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80',
                     title: 'Redesign 💻',
                     text: 'My initial stack is Laravel 8 with Jetstream, Vue, Inertia.js and Tailwind. I had difficulties maintaining this kind of setup. It was challenging for me to debug. I also have to figure out if I have to fix the frontend or the backend.',
                     link: 'https://dev.to/alladinmelico/facemask-progress-2-n-2ho8'
                   },
                   {
-                    src: 'https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80',
-                    title: 'MVP 🧱',
+                    src: 'https://images.unsplash.com/photo-1500989145603-8e7ef71d639e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80',
+                    title: 'Minimum viable product 🧱',
                     text: 'I went back to my initial stack after I set up the backend. I also integrated Vuetify onto my UI.',
                     link: '#'
                   },

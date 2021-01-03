@@ -45,6 +45,40 @@ class PostController extends Controller
         return Inertia::render('Post/Index',compact('posts','postLinks'));
     }
 
+    public function getRelatedPosts(){
+        $followingList = auth()->user()->following->pluck('id')->toArray();
+
+        $posts = Post::with('user.followers')
+                ->whereIn('user_id', $followingList)
+                ->orderBy('updated_at','DESC')
+                ->paginate(10);
+
+        $postLinks = $posts->toArray()['links'];
+        array_shift($postLinks);
+        array_pop($postLinks);
+
+        $posts = $posts->transform(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'name' => $post->name,
+                    'body' => $post->body,
+                    'cover_id' => $post->cover_id,
+                    'date' => $post->date,
+                    'user_id' => $post->user_id,
+                    'user' => $post->user->only(['id','name', 'email','tag','profile_photo_path','is_tag_approved','is_private','profile_photo_url']),
+                    'is_follower' => $post->user->is_follower,
+                    'total_comments' => $post->total_comments,
+                    'liked' => $post->is_liked,
+                    'bookmarked'=> $post->is_bookmarked
+                ];
+        });
+
+        $followings = auth()->user()->total_followings;
+        $followers = auth()->user()->total_followers;
+        $totalPosts = auth()->user()->total_posts;
+        return Inertia::render('Dashboard',compact('posts','followers','followings','totalPosts', 'postLinks'));
+    }
+
     public function create()
     {
         //

@@ -111,4 +111,16 @@ class User extends Authenticatable
         return $this->bookmarked()->get()->pluck('id')->contains(auth()->user()->id);
     }
 
+    public function getTotalPostsAttribute(){
+        return $this->posts->count();
+    }
+
+    public function getTotalFollowersAttribute(){
+        return $this->followers->count();
+    }
+
+    public function getTotalFollowingsAttribute(){
+        return $this->following->count();
+    }
+
 }

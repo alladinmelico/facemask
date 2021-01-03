@@ -24,13 +24,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia\Inertia::render('Dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return Inertia\Inertia::render('Dashboard');
+// })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('user',UserController::class);
     Route::get('/user/getUser/{user}',[UserController::class,'getUser']);
+    Route::get('/dashboard', [PostController::class, 'getRelatedPosts'])->name('dashboard');
     Route::resource('post',PostController::class);
     Route::put('updatePostCover', [PostController::class, 'updateCover'])->name('updatePostCover');
     Route::put('updateCover', [UserController::class, 'updateCover'])->name('updateCover');

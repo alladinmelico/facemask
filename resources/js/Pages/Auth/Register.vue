@@ -1,5 +1,21 @@
 <template>
 	<v-app>
+		<v-app-bar app>
+			<v-avatar class="mr-3" size="70">
+				<a href="/">
+					<v-img
+						contain
+						max-height="70%"
+						:src="'../storage/img/logo.png'"
+						alt="logo"
+					></v-img>
+				</a>
+			</v-avatar>
+
+			<v-toolbar-title class="font-weight-black headline">
+				facemask
+			</v-toolbar-title>
+		</v-app-bar>
 		<v-main class="d-flex justify-center items-center">
 			<v-container>
 				<v-row>
@@ -82,6 +98,12 @@
 								"
 							></v-text-field>
 
+							<a
+								class="text-decoration-underline subtitle-2"
+								:href="route('login')"
+							>
+								Already registered?
+							</a>
 							<v-btn color="primary" type="submit" block
 								>Register</v-btn
 							>
