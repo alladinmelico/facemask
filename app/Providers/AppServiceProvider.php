@@ -38,5 +38,7 @@ class AppServiceProvider extends ServiceProvider
                 'message' => Session::get('message'),
             ];
         });
+
+        \URL::forceScheme('https');
     }
 }
