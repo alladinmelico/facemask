@@ -49,17 +49,11 @@
               @if (Route::has('login'))
                     <div class="ml-auto">
                         @auth
-                            <v-btn rounded color="primary">
-                                <a href="{{ url('/dashboard') }}" class="secondary--text ">Dashboard</a>
-                            </v-btn>
+                                <a href="{{ url('/dashboard') }}" class="primary--text" >Dashboard</a>
                         @else
-                            <v-btn rounded >
-                                <a href="{{ route('login') }}" class="secondary--text ">Login</a>
-                            </v-btn>
+                                <a href="{{ route('login') }}" class="primary--text">Login</a>
                             @if (Route::has('register'))
-                                <v-btn rounded color="primary" >
-                                <a href="{{ route('register') }}" class="secondary--text ">Register</a>
-                                </v-btn>
+                                <a href="{{ route('register') }}" class="primary--text">Register</a>
                             @endif
                         @endauth
                     </div>

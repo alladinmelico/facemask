@@ -6,7 +6,7 @@
 					<v-img
 						contain
 						max-height="70%"
-						:src="'../storage/img/logo.png'"
+						:src="'/img/logo.png'"
 						alt="logo"
 					></v-img>
 				</a>

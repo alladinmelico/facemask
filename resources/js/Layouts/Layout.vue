@@ -5,7 +5,7 @@
 				@click.stop="drawer = !drawer"
 			></v-app-bar-nav-icon>
 			<v-avatar :tile="true">
-				<v-img :src="'../storage/img/logo.png'" alt="logo"></v-img>
+				<v-img :src="'/img/logo.png'" alt="logo"></v-img>
 			</v-avatar>
 			<v-toolbar-title v-if="!$vuetify.breakpoint.xs" class="ml-3"
 				>facemask</v-toolbar-title
