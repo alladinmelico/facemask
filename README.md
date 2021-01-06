@@ -61,7 +61,6 @@ facemask is a mini social media. It tries to assist us to go through this pandem
     <p align="center">
         <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/uvs6myc301mo6dsnnlhk.gif">
     </p>
-        ![Alt Text]()
 
 -   Search
     <p align="center">

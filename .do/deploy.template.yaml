@@ -2,7 +2,7 @@ spec:
     name: facemask
     services:
         - name: web
-          github:
+          git:
               branch: main
               repo_clone_url: https://github.com/alladinmelico/facemask.git
           envs:
