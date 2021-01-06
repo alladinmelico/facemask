@@ -4,41 +4,69 @@
 
 facemask is a mini social media. It tries to assist us to go through this pandemic by sharing our experiencies and learn from each other. This is my submission on the [DigitalOcean App Platform Hackathon](https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k)
 
-<div style="text-align:center">
 [![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/alladinmelico/facemask/tree/master&refcode=d5a8688f39ac)
-<div>
 
 ### Screenshots
 
 -   Landing Page
-    ![Landing Page](https://dev-to-uploads.s3.amazonaws.com/i/ixbbxqtqmfojhy1rfb3f.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/ixbbxqtqmfojhy1rfb3f.gif">
+    </p>
 
 -   Registration
-    ![Registration](https://dev-to-uploads.s3.amazonaws.com/i/rs1m4o3q5udro4vxtiaq.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/rs1m4o3q5udro4vxtiaq.gif">
+    </p>
 
 -   Login
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/fx0roqgk9sp83vh2e1zx.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/fx0roqgk9sp83vh2e1zx.gif">
+    </p>
 
 -   Dashboard
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/9ksqqzoyyajac0fcv1o9.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/9ksqqzoyyajac0fcv1o9.gif">
+    </p>
 
 -   Update profile cover and create Post
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/la4i7l6lrbzemka0u93s.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/la4i7l6lrbzemka0u93s.gif">
+    </p>
 
 -   Edit and delete post
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/z17miic0hnmiycyurbvo.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/z17miic0hnmiycyurbvo.gif">
+    </p>
 
 -   Comments
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/74qr4pdbx7ci70awycte.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/74qr4pdbx7ci70awycte.gif">
+    </p>
 
 -   Chat
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/mokfhkk637i5tonj7j9b.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/mokfhkk637i5tonj7j9b.gif">
+    </p>
 
 -   Tags
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/uvs6myc301mo6dsnnlhk.gif)
+
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/uvs6myc301mo6dsnnlhk.gif">
+    </p>
+        ![Alt Text]()
 
 -   Search
-    ![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/29b6e79yqd1io10ujclq.gif)
+    <p align="center">
+        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/29b6e79yqd1io10ujclq.gif">
+    </p>
 
 ### Description
 
