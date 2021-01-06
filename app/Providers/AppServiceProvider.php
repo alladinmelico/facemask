@@ -40,6 +40,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         \URL::forceScheme('https');
-        \Illuminate\Support\Facades\URL::forceScheme('https');
+        $this->app['request']->server->set('HTTPS', true);
     }
 }

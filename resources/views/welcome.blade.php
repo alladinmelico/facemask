@@ -51,9 +51,9 @@
                         @auth
                                 <a href="{{ url('/dashboard') }}" class="primary--text" >Dashboard</a>
                         @else
-                                <a href="{{ route('login') }}" class="primary--text">Login</a>
+                                <a href="{{ route('login') }}" class="primary--text mx-3">Login</a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="primary--text">Register</a>
+                                <a href="{{ route('register') }}" class="primary--text mx-3">Register</a>
                             @endif
                         @endauth
                     </div>
