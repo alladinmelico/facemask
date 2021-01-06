@@ -4,15 +4,9 @@
 
 facemask is a mini social media. It tries to assist us to go through this pandemic by sharing our experiencies and learn from each other. This is my submission on the [DigitalOcean App Platform Hackathon](https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k)
 
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/alladinmelico/facemask/tree/master&refcode=d5a8688f39ac)
+[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/alladinmelico/facemask/master&refcode=d5a8688f39ac)
 
 ### Screenshots
-
--   Landing Page
-
-    <p align="center">
-        <img width="460" height="300" src="https://dev-to-uploads.s3.amazonaws.com/i/ixbbxqtqmfojhy1rfb3f.gif">
-    </p>
 
 -   Registration
 
