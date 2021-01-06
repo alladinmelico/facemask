@@ -4,7 +4,7 @@ spec:
         - name: web
           git:
               branch: main
-              repo_clone_url: https://github.com/alladinmelico/facemask.git
+              repo_clone_url: https://github.com/alladinmelico/facemask/tree/master
           envs:
               - key: APP_ENV
                 value: 'production'
