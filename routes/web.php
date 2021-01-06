@@ -54,3 +54,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Route::get('chat/{user}', ShowChats::class)->name('chat.show');
     // Route::resource('chat', ShowChats::class);
 });
+
+URL::forceScheme('https');
