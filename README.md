@@ -4,7 +4,9 @@
 
 facemask is a mini social media. It tries to assist us to go through this pandemic by sharing our experiencies and learn from each other. This is my submission on the [DigitalOcean App Platform Hackathon](https://dev.to/devteam/announcing-the-digitalocean-app-platform-hackathon-on-dev-2i1k)
 
-[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/alladinmelico/facemask/tree/master&refcode=d5a8688f39ac))
+<div style="text-align:center">
+[![Deploy to DO](https://mp-assets1.sfo2.digitaloceanspaces.com/deploy-to-do/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/alladinmelico/facemask/tree/master&refcode=d5a8688f39ac)
+<div>
 
 ### Screenshots
 
@@ -59,9 +61,20 @@ facemask is a mini social media. It tries to assist us to go through this pandem
 -   Global search on posts, comments, and users.
 -   Dashboard for showing stats and newsfeed.
 
-### Link to Source Code
+### Additional Resources/Info
 
-**https://github.com/alladinmelico/facemask**
+If you are building app using Laravel 8 here are some configs that might help you:
+
+-   the default database database.php is mysql and it comes with charset of utf8mb4. The default dabase in the App Platform is pgsql it expects the charset to be utf8. So might encounter an error if you deploy your Laravel 8 app with all those defaults.
+-   I had to set all the routes to https since App Platform serves your app with Https. Put this in AppServiceProvider.php
+
+```php
+if (env('APP_ENV') === 'production') {
+    \Illuminate\Support\Facades\URL::forceScheme('https');
+}
+```
+
+-   Just a reminder (for those who new to deploying app), all the variables you used in the .env file should be put on App Platform's env variables.
 
 ## License
 
