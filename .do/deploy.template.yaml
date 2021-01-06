@@ -3,8 +3,8 @@ spec:
     services:
         - name: web
           git:
-              branch: main
-              repo_clone_url: https://github.com/alladinmelico/facemask/tree/master
+              branch: master
+              repo_clone_url: https://github.com/alladinmelico/facemask.git
           envs:
               - key: APP_ENV
                 value: 'production'
