@@ -39,7 +39,8 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
-        \URL::forceScheme('https');
-        $this->app['request']->server->set('HTTPS', true);
+        if (env('APP_ENV') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

@@ -1,0 +1,42 @@
+spec:
+    name: facemask
+    services:
+        - name: web
+          github:
+              branch: main
+              repo_clone_url: https://github.com/alladinmelico/facemask.git
+          envs:
+              - key: APP_ENV
+                value: 'production'
+              - key: APP_URL
+                value: ${APP_URL}
+              - key: DATABASE_URL
+                value: ${db.DATABASE_URL}
+              - key: BROADCAST_DRIVER
+                value: 'pusher'
+              - key: CACHE_DRIVER
+                value: 'file'
+              - key: PUSHER_APP_ID
+                scope: RUN_TIME
+                type: SECRET
+              - key: PUSHER_APP_KEY
+                scope: RUN_TIME
+                type: SECRET
+              - key: PUSHER_APP_SECRET
+                scope: RUN_TIME
+                type: SECRET
+              - key: PUSHER_APP_CLUSTER
+                scope: RUN_TIME
+                type: SECRET
+              - key: MIX_PUSHER_APP_KEY
+                value: ${PUSHER_APP_KEY}
+              - key: MIX_PUSHER_APP_CLUSTER
+                value: ${PUSHER_APP_CLUSTER}
+              - key: MIX_UNSPLASH_ACCESS_KEY
+                scope: RUN_TIME
+              - key: SESSION_DRIVER
+                value: 'cookie'
+              - key: QUEUE_CONNECTION
+                value: 'sync'
+          databases:
+              - name: db

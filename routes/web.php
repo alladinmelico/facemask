@@ -21,7 +21,7 @@ use App\Http\Controllers\SearchController;
 */
 
 
-URL::forceScheme('https');
+// URL::forceScheme('https');
 
 Route::get('/', function () {
     return view('welcome');
