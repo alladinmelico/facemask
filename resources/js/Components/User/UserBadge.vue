@@ -45,11 +45,11 @@
 			v-if="userBadge !== undefined && userBadge.id !== $page.user.id"
 			v-slot="{ hover }"
 		>
-			<a :href="`${route('chat')}/?user=${userBadge.id}`">
+			<inertia-link :href="route('chat', { user: userBadge.id })">
 				<v-icon>
 					{{ hover ? 'mdi-message' : 'mdi-message-outline' }}
 				</v-icon>
-			</a>
+			</inertia-link>
 			<!-- TODO: inertia link not working on https on route with param -->
 		</v-hover>
 		<slot></slot>
