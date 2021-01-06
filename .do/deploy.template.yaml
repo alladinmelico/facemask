@@ -38,5 +38,8 @@ spec:
                 value: 'cookie'
               - key: QUEUE_CONNECTION
                 value: 'sync'
-          databases:
-              - name: db
+    databases:
+        - name: db
+        - engine: PG
+        - db_name: db_facemask
+        - production: false
