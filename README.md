@@ -69,7 +69,7 @@ facemask is a mini social media. It tries to assist us to go through this pandem
 -   frontend: [Vue](https://vuejs.org/)
 -   UI framework: [Vuetify](https://vuetifyjs.com/en/)
 -   SPA: [Inertia JS](https://inertiajs.com/)
--   Scaffolding: [Laravel Jetstream](https://jetstream.laravel.com/1.x/introduction.html) - a kit for all the auth I need
+-   Scaffolding: [Laravel Jetstream](https://jetstream.laravel.com/1.x/introduction.html)
 -   Realtime feature: [Pusher](https://dashboard.pusher.com/)
 
 **Features**
